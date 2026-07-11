@@ -186,10 +186,11 @@ The MVP forbids:
 
 ## Existing AI-Like Command Migration and Delegation Notes
 
-The current public `ollama-discord` default branch contains a single legacy
-`bot.py` that opens a Discord connection, reads `DISCORD_TOKEN`, and calls
-Ollama directly. This document defines the target MVP architecture for future
-work; this PR does not modify that runtime.
+The current public `ollama-discord` default branch still includes a legacy
+`bot.py` runtime that opens a Discord connection, reads `DISCORD_TOKEN`, and
+calls Ollama directly. This conflicts with the target MVP architecture and
+requires later migration; this documentation PR does not modify or remove that
+runtime behavior.
 
 The current `ollama-discord` command names observed locally include `ask`,
 `codeai`, `studyai`, `planai`, `criticai`, `summarizeai`, `fileai`, `resetai`,
