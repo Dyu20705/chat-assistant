@@ -16,12 +16,12 @@ import discord
 from discord import app_commands
 from dotenv import load_dotenv
 
-
 # ============================================================
 # BOOTSTRAP / CONFIG
 # ============================================================
 
-load_dotenv()
+if os.getenv("OLLAMA_DISCORD_SKIP_DOTENV") != "1":
+    load_dotenv()
 
 
 def env_int(name: str, default: int, minimum: int | None = None, maximum: int | None = None) -> int:
