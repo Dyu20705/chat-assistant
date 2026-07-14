@@ -109,7 +109,14 @@ resolve_manifest() {
       | $common + {
           repositories: (
             .[1:]
-            | map({(.repository): {epic_key: .epic_key, issues: .issues}})
+            | sort_by(.repository)
+            | group_by(.repository)
+            | map({
+                (.[0].repository): {
+                  epic_key: .[0].epic_key,
+                  issues: (map(.issues[]))
+                }
+              })
             | add
           )
         }
@@ -315,6 +322,7 @@ create_or_update_issue() {
     url="$(gh "${args[@]}")"
     log "created $repo: $key -> $url"
 
+    # Refresh the cache so later title/key matching in the same repository is accurate.
     list_issues "$repo" "$issues_file"
 
     jq -cn \
