@@ -11,10 +11,17 @@
     },
     {
       "key": "HA-AI-007",
-      "title": "[IMPLEMENTATION] Build deterministic triage and validated structured health responses",
+      "title": "[IMPLEMENTATION] Implement structured response contract and post-generation validator",
       "labels": ["type:implementation","area:health","priority:p0","status:blocked"],
-      "match_titles": ["Implement structured response contract and post-generation validator","Expand deterministic triage rules and safety evaluation suite"],
-      "body": "## Outcome\n\nKeep escalation and prohibited-output enforcement independent of Ollama.\n\n## Scope\n\n- Versioned intake facts, deterministic triage rules, structured response schema, post-generation validator, evidence links, uncertainty, and safe next steps.\n\n## Acceptance criteria\n\n- [ ] Emergency bypass works when Ollama is unavailable.\n- [ ] Definitive diagnosis, dose changes, invented citations, and unsupported reassurance are blocked.\n- [ ] Users can correct extracted facts before storage.\n- [ ] False-negative and false-positive suites are measured."
+      "match_titles": ["Implement structured response contract and post-generation validator"],
+      "body": "## Outcome\n\nValidate every model-assisted health response against structured safety and evidence rules before display or persistence.\n\n## Scope\n\n- Response fields for summary, uncertainty, safe next steps, escalation signs, questions, sources, and safety outcome.\n- Post-generation checks for diagnosis, prescribing, dose changes, fabricated citations, unsupported reassurance, and missing mandatory escalation text.\n\n## Dependencies\n\n- HA-AI-002 through HA-AI-006\n\n## Acceptance criteria\n\n- [ ] Invalid or incomplete output fails closed.\n- [ ] Model text cannot override deterministic risk or prohibited-use decisions.\n- [ ] Mandatory urgent/emergency content cannot be omitted or hidden.\n- [ ] Tests cover malformed, adversarial, unsupported, and fabricated-source outputs."
+    },
+    {
+      "key": "HA-AI-015",
+      "title": "[SAFETY] Expand deterministic triage rules and safety evaluation suite",
+      "labels": ["type:implementation","area:health","priority:p0","status:blocked"],
+      "match_titles": ["Expand deterministic triage rules and safety evaluation suite"],
+      "body": "## Outcome\n\nImplement reviewed versioned escalation rules that operate independently of Ollama and are evaluated for false negatives and false positives.\n\n## Scope\n\n- Structured intake facts, population/context constraints, urgent and emergency rule groups, source/reviewer metadata, uncertainty, and safe action text.\n- Synthetic adversarial and boundary cases.\n\n## Dependencies\n\n- HA-AI-002 through HA-AI-005\n\n## Acceptance criteria\n\n- [ ] Emergency bypass works when Ollama or retrieval is unavailable.\n- [ ] Every rule records source, version, review status, and affected hazards.\n- [ ] False-negative and false-positive results are measured against an approved baseline.\n- [ ] Users can correct extracted facts before rules or storage rely on them."
     },
     {
       "key": "HA-AI-008",
