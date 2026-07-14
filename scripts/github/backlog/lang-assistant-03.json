@@ -1,0 +1,13 @@
+{
+  "repository": "Dyu20705/lang-assistant",
+  "epic_key": "LA-AI-001",
+  "issues": [
+    {
+      "key": "LA-AI-011",
+      "title": "[MAINTENANCE] Define prompt, model, schema, and curriculum review policy",
+      "labels": ["type:maintenance","area:language","priority:p1"],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep coaching behavior and learner data compatible as curricula, prompts, models, and storage evolve.\n\n## Scope\n\n- Review cadence, compatibility window, migration policy, evaluation canaries, deprecation, and incident rollback.\n\n## Acceptance criteria\n\n- [ ] Every prompt/model change runs the evaluation suite.\n- [ ] Schema changes include export and rollback tests.\n- [ ] Deprecated operations remain supported for the announced window.\n- [ ] Future multi-user work cannot weaken owner privacy."
+    }
+  ]
+}
