@@ -1,0 +1,41 @@
+{
+  "repository": "Dyu20705/health-assistant",
+  "epic_key": "HA-AI-001",
+  "issues": [
+    {
+      "key": "HA-AI-006",
+      "title": "[CONTRACT] Expose a versioned Health Assistant application-service boundary",
+      "labels": ["type:design","area:health","area:integration","priority:p0","cross-repo","status:blocked"],
+      "match_titles": [],
+      "body": "## Outcome\n\nPublish a Discord-independent contract only after intended-use, hazard, privacy, and evidence decisions are approved.\n\n## Scope\n\n- Discovery/readiness, structured intake, approved profile operations, safe support response, appointment preparation, export/delete, and reminders only as allowed.\n- Risk level, uncertainty, escalation, provenance, stable safety refusals, deadline, and cancellation.\n\n## Acceptance criteria\n\n- [ ] No database schema, raw prompt, or private module is exposed.\n- [ ] Emergency and urgent outputs have mandatory structured fields.\n- [ ] Generic chat cannot override or emulate the contract.\n- [ ] Deterministic fixtures cover ordinary, urgent, emergency, invalid, unsupported, and unavailable cases."
+    },
+    {
+      "key": "HA-AI-007",
+      "title": "[IMPLEMENTATION] Build deterministic triage and validated structured health responses",
+      "labels": ["type:implementation","area:health","priority:p0","status:blocked"],
+      "match_titles": ["Implement structured response contract and post-generation validator","Expand deterministic triage rules and safety evaluation suite"],
+      "body": "## Outcome\n\nKeep escalation and prohibited-output enforcement independent of Ollama.\n\n## Scope\n\n- Versioned intake facts, deterministic triage rules, structured response schema, post-generation validator, evidence links, uncertainty, and safe next steps.\n\n## Acceptance criteria\n\n- [ ] Emergency bypass works when Ollama is unavailable.\n- [ ] Definitive diagnosis, dose changes, invented citations, and unsupported reassurance are blocked.\n- [ ] Users can correct extracted facts before storage.\n- [ ] False-negative and false-positive suites are measured."
+    },
+    {
+      "key": "HA-AI-008",
+      "title": "[INTEGRATION] Expose Health Assistant through Quân Sư and Mama Tổng Quản",
+      "labels": ["type:implementation","area:health","area:integration","priority:p0","cross-repo","status:blocked"],
+      "match_titles": ["Expose Health Assistant through ollama-discord and my-discord-bot"],
+      "body": "## Outcome\n\nIntegrate the reviewed health capability without bypassing `chat-assistant` or weakening private Discord policy.\n\n## Scope\n\n- Health Assistant owns prompts, rules, evidence, and data.\n- Quân Sư owns routing, deadlines, cancellation, back-pressure, and transport-safe errors.\n- Mama owns owner authorization, ephemeral rendering, and Discord limits.\n\n## Acceptance criteria\n\n- [ ] No repository reads another database.\n- [ ] No generic-chat fallback is used.\n- [ ] Tests require no live Discord or Ollama.\n- [ ] The capability remains disabled until safety and privacy gates pass."
+    },
+    {
+      "key": "HA-AI-009",
+      "title": "[TEST] Add health contract, rule, evidence, privacy, and migration test suites",
+      "labels": ["type:test","area:health","area:integration","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nCreate deterministic synthetic tests across the health domain and integration boundary.\n\n## Scope\n\n- Ordinary, urgent, emergency, unsupported, medication, vulnerable-population, malformed, timeout, provider unavailable, stale/conflicting evidence, cross-user, export/delete, and migration cases.\n\n## Acceptance criteria\n\n- [ ] Default tests use no real health data or live providers.\n- [ ] Every high-risk hazard maps to tests.\n- [ ] Gateway fixtures preserve safety and urgency metadata.\n- [ ] Logs and traces are asserted content-free."
+    },
+    {
+      "key": "HA-AI-010",
+      "title": "[QA] Execute clinical-safety, privacy, usability, and abuse evaluation",
+      "labels": ["type:qa","area:health","priority:p0","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nEvaluate the exact release candidate against the hazard log and approved intended use before Discord exposure.\n\n## Scope\n\n- False-negative/positive triage review, citation support, overconfidence, truncation, public-channel leakage, prompt injection, cross-user access, unavailable dependencies, and model changes.\n- Qualified human review where claims exceed ordinary software QA.\n\n## Acceptance criteria\n\n- [ ] Residual risks are recorded and accepted or release is blocked.\n- [ ] Emergency guidance remains visible and consistent.\n- [ ] No real private health content is required for the suite.\n- [ ] Model/prompt/source/rule versions are recorded."
+    }
+  ]
+}
