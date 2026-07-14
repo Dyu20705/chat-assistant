@@ -97,8 +97,8 @@ jobs:
             > .pytest_tmp/ai-ecosystem-backlog.json
           test "$(jq -r '.totals.repositories' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
           test "$(jq -r '.totals.epics' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
-          test "$(jq -r '.totals.child_issues' .pytest_tmp/ai-ecosystem-backlog.json)" = "66"
-          test "$(jq -r '.totals.creates' .pytest_tmp/ai-ecosystem-backlog.json)" = "71"
+          test "$(jq -r '.totals.child_issues' .pytest_tmp/ai-ecosystem-backlog.json)" = "70"
+          test "$(jq -r '.totals.creates' .pytest_tmp/ai-ecosystem-backlog.json)" = "75"
 
       - name: Write CI summary
         if: matrix.python-version == '3.11'
@@ -112,5 +112,5 @@ jobs:
             echo "- Pytest coverage threshold: 65%"
             echo "- Dependency audit: passed"
             echo "- Workflow validation: passed"
-            echo "- AI ecosystem backlog dry-run: 5 repositories, 71 managed issues"
+            echo "- AI ecosystem backlog dry-run: 5 repositories, 75 managed issues"
           } >> "$GITHUB_STEP_SUMMARY"
