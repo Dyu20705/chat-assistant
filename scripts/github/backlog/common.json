@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "title": "Personal AI Ecosystem Backlog",
+  "milestone": {
+    "title": "AI Ecosystem MVP",
+    "description": "Owner-only local AI ecosystem: Mama Discord gateway, Quân Sư local gateway, and language/game/health capabilities.",
+    "state": "open"
+  },
+  "labels": [
+    {
+      "name": "type:epic",
+      "color": "5319E7",
+      "description": "Coordinates a multi-issue outcome."
+    },
+    {
+      "name": "type:requirements",
+      "color": "D4C5F9",
+      "description": "Product and system requirements."
+    },
+    {
+      "name": "type:design",
+      "color": "C5DEF5",
+      "description": "Architecture, contracts, or detailed design."
+    },
+    {
+      "name": "type:implementation",
+      "color": "0E8A16",
+      "description": "Production implementation work."
+    },
+    {
+      "name": "type:test",
+      "color": "BFDADC",
+      "description": "Automated test and compatibility coverage."
+    },
+    {
+      "name": "type:qa",
+      "color": "FBCA04",
+      "description": "Manual QA, evaluation, and acceptance evidence."
+    },
+    {
+      "name": "type:deploy",
+      "color": "1D76DB",
+      "description": "Deployment and operating procedures."
+    },
+    {
+      "name": "type:release",
+      "color": "D93F0B",
+      "description": "Release validation and cutover."
+    },
+    {
+      "name": "type:maintenance",
+      "color": "006B75",
+      "description": "Operations, upgrades, deprecation, and maintenance."
+    },
+    {
+      "name": "area:ai-ecosystem",
+      "color": "0052CC",
+      "description": "Cross-repository personal AI assistant ecosystem."
+    },
+    {
+      "name": "area:gateway",
+      "color": "0366D6",
+      "description": "Local AI gateway, protocol, routing, and orchestration."
+    },
+    {
+      "name": "area:integration",
+      "color": "0E8A16",
+      "description": "Reviewed public contracts between repositories."
+    },
+    {
+      "name": "area:discord",
+      "color": "5865F2",
+      "description": "Discord gateway, commands, permissions, and delivery."
+    },
+    {
+      "name": "area:language",
+      "color": "C2E0C6",
+      "description": "English and Japanese coaching domain."
+    },
+    {
+      "name": "area:game",
+      "color": "F9D0C4",
+      "description": "Rhythm-game coaching domain."
+    },
+    {
+      "name": "area:health",
+      "color": "E99695",
+      "description": "Health support, privacy, and safety domain."
+    },
+    {
+      "name": "priority:p0",
+      "color": "B60205",
+      "description": "Blocks the MVP or a safety boundary."
+    },
+    {
+      "name": "priority:p1",
+      "color": "D93F0B",
+      "description": "Required for production-quality MVP."
+    },
+    {
+      "name": "priority:p2",
+      "color": "FBCA04",
+      "description": "Important follow-up after the first release."
+    },
+    {
+      "name": "cross-repo",
+      "color": "5319E7",
+      "description": "Coordinates work across multiple repositories."
+    },
+    {
+      "name": "single-user-mvp",
+      "color": "EDEDED",
+      "description": "The MVP is authorized for the owner only."
+    },
+    {
+      "name": "ready-for-agent",
+      "color": "EDEDED",
+      "description": "Scoped and ready for implementation."
+    },
+    {
+      "name": "status:blocked",
+      "color": "B60205",
+      "description": "Blocked by a dependency or design decision."
+    }
+  ]
+}
