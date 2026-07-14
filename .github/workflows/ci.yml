@@ -87,6 +87,19 @@ jobs:
         shell: bash
         run: actionlint .github/workflows/ci.yml
 
+      - name: Validate AI ecosystem backlog synchronizer
+        if: matrix.python-version == '3.11'
+        shell: bash
+        run: |
+          mkdir -p .pytest_tmp
+          bash -n scripts/github/sync_ai_ecosystem_issues.sh
+          DRY_RUN=true bash scripts/github/sync_ai_ecosystem_issues.sh \
+            > .pytest_tmp/ai-ecosystem-backlog.json
+          test "$(jq -r '.totals.repositories' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
+          test "$(jq -r '.totals.epics' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
+          test "$(jq -r '.totals.child_issues' .pytest_tmp/ai-ecosystem-backlog.json)" = "66"
+          test "$(jq -r '.totals.creates' .pytest_tmp/ai-ecosystem-backlog.json)" = "71"
+
       - name: Write CI summary
         if: matrix.python-version == '3.11'
         shell: bash
@@ -99,4 +112,5 @@ jobs:
             echo "- Pytest coverage threshold: 65%"
             echo "- Dependency audit: passed"
             echo "- Workflow validation: passed"
+            echo "- AI ecosystem backlog dry-run: 5 repositories, 71 managed issues"
           } >> "$GITHUB_STEP_SUMMARY"
