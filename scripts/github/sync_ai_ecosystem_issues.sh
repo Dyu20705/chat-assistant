@@ -2,9 +2,9 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-DEFAULT_MANIFEST="$SCRIPT_DIR/ai_ecosystem_backlog.json"
+DEFAULT_MANIFEST="$SCRIPT_DIR/backlog"
 
-MANIFEST="${MANIFEST:-$DEFAULT_MANIFEST}"
+MANIFEST_SOURCE="${MANIFEST:-$DEFAULT_MANIFEST}"
 TARGET_REPO="${TARGET_REPO:-all}"
 ASSIGNEE="${ASSIGNEE:-}"
 DRY_RUN="${DRY_RUN:-false}"
@@ -25,14 +25,14 @@ Usage:
 
 Options:
   --repo OWNER/REPO   Sync one repository instead of all five.
-  --manifest PATH     Use another manifest file.
+  --manifest PATH     Use another manifest JSON file or manifest directory.
   --assignee USER     Assign created/reused issues, e.g. Dyu20705 or @me.
   --dry-run           Validate and print the planned mutations only.
   -h, --help          Show this help.
 
 Environment equivalents:
   TARGET_REPO=all
-  MANIFEST=path/to/manifest.json
+  MANIFEST=path/to/manifest.json-or-directory
   ASSIGNEE=@me
   DRY_RUN=true
   UPDATE_EXISTING=true
@@ -57,7 +57,7 @@ while (($#)); do
       shift 2
       ;;
     --manifest)
-      MANIFEST="${2:?--manifest requires a path}"
+      MANIFEST_SOURCE="${2:?--manifest requires a path}"
       shift 2
       ;;
     --assignee)
@@ -90,7 +90,39 @@ die() {
 }
 
 command -v jq >/dev/null 2>&1 || die "jq is required"
-[[ -r "$MANIFEST" ]] || die "manifest is not readable: $MANIFEST"
+
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+
+resolve_manifest() {
+  local source="$1"
+  if [[ -d "$source" ]]; then
+    local common="$source/common.json"
+    [[ -r "$common" ]] || die "manifest directory is missing common.json: $source"
+    local -a parts=()
+    while IFS= read -r part; do
+      parts+=("$part")
+    done < <(find "$source" -maxdepth 1 -type f -name '*.json' ! -name 'common.json' -print | sort)
+    ((${#parts[@]} > 0)) || die "manifest directory has no repository JSON files: $source"
+    jq -s '
+      .[0] as $common
+      | $common + {
+          repositories: (
+            .[1:]
+            | map({(.repository): {epic_key: .epic_key, issues: .issues}})
+            | add
+          )
+        }
+    ' "$common" "${parts[@]}" >"$TMP_DIR/manifest.json"
+    printf '%s\n' "$TMP_DIR/manifest.json"
+    return
+  fi
+
+  [[ -r "$source" ]] || die "manifest is not readable: $source"
+  printf '%s\n' "$source"
+}
+
+MANIFEST="$(resolve_manifest "$MANIFEST_SOURCE")"
 
 jq -e '
   .schema_version == 1
@@ -118,9 +150,6 @@ if [[ "$DRY_RUN" != true ]]; then
   command -v gh >/dev/null 2>&1 || die "gh is required outside dry-run"
   gh auth status --hostname github.com >/dev/null
 fi
-
-TMP_DIR="$(mktemp -d)"
-trap 'rm -rf "$TMP_DIR"' EXIT
 
 MILESTONE_TITLE="$(jq -r '.milestone.title' "$MANIFEST")"
 MANAGED_START='<!-- managed-by:ai-ecosystem-backlog -->'
