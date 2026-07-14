@@ -1,0 +1,34 @@
+{
+  "repository": "Dyu20705/chat-assistant",
+  "epic_key": "CA-AI-001",
+  "issues": [
+    {
+      "key": "CA-AI-019",
+      "title": "[DEPLOY] Add reproducible local service deployment and operating guide",
+      "labels": ["type:deploy","area:gateway","priority:p0","cross-repo"],
+      "match_titles": ["[DEPLOY] Add reproducible local deployment and operating guide"],
+      "body": "## Outcome\n\nRun Quân Sư reliably beside Mama and local Ollama on Windows and Linux.\n\n## Scope\n\n- Native process and Docker Compose options.\n- Loopback/private network, authentication secrets, readiness, restart, resource limits, log rotation, backup boundaries, upgrade, and rollback.\n- Pinned assistant package versions or service endpoints.\n\n## Acceptance criteria\n\n- [ ] No public port is required.\n- [ ] The service starts without a Discord token.\n- [ ] Deployment identifies exact versions of all assistant contracts.\n- [ ] Operators can diagnose one unavailable adapter without exposing content."
+    },
+    {
+      "key": "CA-AI-020",
+      "title": "[DEMO] Prove generic, language, game, and health end-to-end workflows",
+      "labels": ["type:qa","area:ai-ecosystem","priority:p1","cross-repo","status:blocked"],
+      "match_titles": ["[DEMO] Build the end-to-end language coaching workflow","[DEMO] Build the end-to-end game coaching workflow"],
+      "body": "## Outcome\n\nProvide repeatable synthetic end-to-end demonstrations from Mama through Quân Sư to each approved capability.\n\n## Scope\n\n- Generic advisor chat.\n- Language mission and correction.\n- Game evidence review and training plan.\n- Health workflow only after safety gates pass.\n- Unavailable, timeout, cancellation, and incompatible-version examples.\n\n## Acceptance criteria\n\n- [ ] Each demo records repository SHAs and contract versions.\n- [ ] Demos work with deterministic fakes; optional live Ollama smoke tests are separately marked.\n- [ ] No real learner, player, or health data is required."
+    },
+    {
+      "key": "CA-AI-021",
+      "title": "[RELEASE] Execute the five-repository AI ecosystem release gate",
+      "labels": ["type:release","area:ai-ecosystem","priority:p0","cross-repo"],
+      "match_titles": ["[RELEASE] Define and execute the four-repository MVP release checklist"],
+      "body": "## Outcome\n\nRelease the first owner-only ecosystem only after contract, privacy, QA, deployment, backup, and rollback evidence pass.\n\n## Scope\n\n- Exact SHAs and package/model/prompt versions.\n- Compatibility matrix.\n- Live designated-guild validation through Mama.\n- Restart, upgrade, rollback, and incident evidence.\n- Health capability may remain disabled until its stricter gate passes.\n\n## Acceptance criteria\n\n- [ ] No second AI Discord token is used.\n- [ ] Every enabled capability has a tested fallback and disable switch.\n- [ ] Release artifacts contain no secrets or private data.\n- [ ] The previous working version can be restored."
+    },
+    {
+      "key": "CA-AI-022",
+      "title": "[MAINTENANCE] Define upgrades, compatibility windows, incidents, and adapter deprecation",
+      "labels": ["type:maintenance","area:gateway","area:ai-ecosystem","priority:p1","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nMaintain Quân Sư as a stable orchestration layer while assistants, prompts, and Ollama models evolve.\n\n## Scope\n\n- Supported protocol and adapter versions.\n- Dependency update cadence and contract canaries.\n- Incident severity, disable switches, rollback triggers, and postmortems.\n- Deprecation and removal policy for capabilities and operations.\n\n## Acceptance criteria\n\n- [ ] No breaking adapter release is consumed without fixtures.\n- [ ] Health rule/source updates follow their own review gate.\n- [ ] Stale jobs, temporary files, logs, and secrets have cleanup/rotation procedures.\n- [ ] Maintenance never moves specialist domain logic into the gateway."
+    }
+  ]
+}
