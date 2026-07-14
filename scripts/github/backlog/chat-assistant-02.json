@@ -1,0 +1,48 @@
+{
+  "repository": "Dyu20705/chat-assistant",
+  "epic_key": "CA-AI-001",
+  "issues": [
+    {
+      "key": "CA-AI-007",
+      "title": "[IMPLEMENTATION] Build the capability registry and request router",
+      "labels": ["type:implementation","area:gateway","priority:p0","status:blocked"],
+      "match_titles": ["[TASK] Implement capability registry and request router"],
+      "body": "## Outcome\n\nRoute versioned capability operations to generic chat or one specialist adapter without embedding domain logic.\n\n## Scope\n\n- Capability discovery, supported operations, version ranges, readiness, authorization requirements, and adapter metadata.\n- Duplicate registration rejection and deterministic routing.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-005\n- CA-AI-006\n\n## Acceptance criteria\n\n- [ ] Unknown or disabled capabilities fail predictably.\n- [ ] The router never falls back from health/language/game into generic chat.\n- [ ] Adapter exceptions are translated to stable gateway errors.\n- [ ] Registry behavior is deterministic and testable without Ollama."
+    },
+    {
+      "key": "CA-AI-008",
+      "title": "[IMPLEMENTATION] Implement job lifecycle, back-pressure, deadlines, and cancellation",
+      "labels": ["type:implementation","area:gateway","priority:p0","status:blocked"],
+      "match_titles": ["[TASK] Implement timeout, cancellation, concurrency, and job lifecycle"],
+      "body": "## Outcome\n\nBound slow local-model and assistant work so one request cannot destabilize the ecosystem.\n\n## Scope\n\n- Per-capability concurrency and queue limits.\n- Deadlines, cooperative cancellation, progress, cleanup, and idempotency metadata.\n- Back-pressure and busy responses.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-004\n- CA-AI-006\n- CA-AI-007\n\n## Acceptance criteria\n\n- [ ] Queued and running jobs are bounded.\n- [ ] Timeout or cancellation removes gateway-owned temporary data.\n- [ ] State-changing operations are not blindly retried.\n- [ ] Shutdown drains or cancels work within a documented limit.\n- [ ] Tests cover races, double cancellation, and worker failure."
+    },
+    {
+      "key": "CA-AI-009",
+      "title": "[FEATURE] Implement Quân Sư generic advisor chat",
+      "labels": ["type:implementation","area:gateway","priority:p1","single-user-mvp","status:blocked"],
+      "match_titles": [],
+      "body": "## Outcome\n\nProvide normal chatbot conversation and advisor modes for coding, research, planning, critique, and summarization.\n\n## Scope\n\n- Versioned generic-chat capability and operations.\n- Bounded conversation context and explicit reset/history policy.\n- Prompt versions, model options, response validation, and safe content limits.\n- No specialist impersonation or domain fallback.\n\n## Dependencies\n\n- CA-AI-004\n- CA-AI-007\n- CA-AI-008\n\n## Acceptance criteria\n\n- [ ] Generic responses are structured and bounded.\n- [ ] Conversation memory is owner-scoped and has explicit retention/delete behavior.\n- [ ] Health-like requests are redirected to the approved health capability rather than answered as medical advice.\n- [ ] Provider unavailability returns a stable error."
+    },
+    {
+      "key": "CA-AI-010",
+      "title": "[IMPLEMENTATION] Build the local Ollama provider boundary and dependency health",
+      "labels": ["type:implementation","area:gateway","priority:p0","ready-for-agent"],
+      "match_titles": ["[TASK] Implement runtime health and generic Ollama provider boundary"],
+      "body": "## Outcome\n\nProvide a replaceable Ollama adapter for generic advisor chat and health/readiness reporting without coupling specialist assistants to gateway prompts.\n\n## Scope\n\n- Request/response protocol, model selection, timeout, cancellation, structured output validation, and health cache.\n- Fake provider for tests.\n\n## Acceptance criteria\n\n- [ ] The adapter is independent of Discord.\n- [ ] Health checks are bounded and do not block requests.\n- [ ] Provider errors are translated consistently.\n- [ ] Specialist prompts and algorithms are not copied into this repository."
+    },
+    {
+      "key": "CA-AI-011",
+      "title": "[INTEGRATION] Implement the Lang Assistant adapter",
+      "labels": ["type:implementation","area:integration","area:language","priority:p1","cross-repo","status:blocked"],
+      "match_titles": ["[INTEGRATION] Implement lang-assistant adapter"],
+      "body": "## Outcome\n\nImplement a gateway adapter against the reviewed public application-service contract from `Dyu20705/lang-assistant`.\n\n## Scope\n\n- Capability discovery and version checks.\n- Typed request/result translation.\n- Timeout, cancellation, health, and stable error mapping.\n- No private-module imports, database access, or human CLI parsing.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-007\n- CA-AI-008\n- Public contract in `Dyu20705/lang-assistant`.\n\n## Acceptance criteria\n\n- [ ] Contract fixtures pass in both producer and gateway repositories.\n- [ ] Unavailable or incompatible assistants degrade independently.\n- [ ] Domain safety refusals and validation errors preserve their meaning.\n- [ ] The adapter contains orchestration only, not domain prompts or policy."
+    },
+    {
+      "key": "CA-AI-012",
+      "title": "[INTEGRATION] Implement the Game Assistant adapter",
+      "labels": ["type:implementation","area:integration","area:game","priority:p1","cross-repo","status:blocked"],
+      "match_titles": ["[INTEGRATION] Implement game-assistant adapter"],
+      "body": "## Outcome\n\nImplement a gateway adapter against the reviewed public application-service contract from `Dyu20705/game-assistant`.\n\n## Scope\n\n- Capability discovery and version checks.\n- Typed request/result translation.\n- Timeout, cancellation, health, and stable error mapping.\n- No private-module imports, database access, or human CLI parsing.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-007\n- CA-AI-008\n- Public contract in `Dyu20705/game-assistant`.\n\n## Acceptance criteria\n\n- [ ] Contract fixtures pass in both producer and gateway repositories.\n- [ ] Unavailable or incompatible assistants degrade independently.\n- [ ] Domain safety refusals and validation errors preserve their meaning.\n- [ ] The adapter contains orchestration only, not domain prompts or policy."
+    }
+  ]
+}
