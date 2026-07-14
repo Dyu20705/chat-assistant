@@ -32,10 +32,17 @@
     },
     {
       "key": "HA-AI-005",
-      "title": "[EVIDENCE] Govern approved health sources and claim-to-source validation",
+      "title": "[EVIDENCE] Define curated medical knowledge governance and source registry",
       "labels": ["type:design","area:health","priority:p0","ready-for-agent"],
-      "match_titles": ["Define curated medical knowledge governance and source registry","Implement retrieval and claim-to-source validation"],
-      "body": "## Outcome\n\nUse curated, reviewed, versioned evidence and verify material claims before display.\n\n## Scope\n\n- Source registry, locale/population, license, version, status, review, expiry, conflicts, ingestion, retrieval, and citations.\n- Open web search is not the default production source.\n\n## Acceptance criteria\n\n- [ ] Every material claim maps to supporting source passages.\n- [ ] Missing, stale, conflicting, or mismatched evidence lowers confidence or refuses the claim.\n- [ ] Fabricated citations are blocked by regression tests.\n- [ ] Source updates trigger affected evaluation suites."
+      "match_titles": ["Define curated medical knowledge governance and source registry"],
+      "body": "## Outcome\n\nDefine which reviewed sources may ground health support and how they are licensed, versioned, expired, replaced, and attributed.\n\n## Scope\n\n- Source registry schema, publisher, locale, population, version, publication/review/expiry dates, license, reviewer, content hash, status, and conflict policy.\n- Open web search is not the default production source.\n\n## Acceptance criteria\n\n- [ ] Unapproved, stale, withdrawn, or incompatible sources cannot enter production retrieval.\n- [ ] Conflicting guidance has an explicit resolution or refusal policy.\n- [ ] Every source update records review and affected safety evaluations.\n- [ ] Distributable test fixtures respect source licenses."
+    },
+    {
+      "key": "HA-AI-014",
+      "title": "[EVIDENCE] Implement retrieval and claim-to-source validation",
+      "labels": ["type:implementation","area:health","priority:p0","status:blocked"],
+      "match_titles": ["Implement retrieval and claim-to-source validation"],
+      "body": "## Outcome\n\nRetrieve only approved evidence and verify that every material displayed claim is supported by the cited passages.\n\n## Scope\n\n- Deterministic ingestion/retrieval boundaries, locale/population filters, document status, passage references, citation validation, confidence reduction, and refusal.\n- Fabricated, mismatched, stale, and conflicting citation cases.\n\n## Dependencies\n\n- HA-AI-005\n\n## Acceptance criteria\n\n- [ ] Every material claim maps to supporting source passages.\n- [ ] Missing, stale, conflicting, or mismatched evidence lowers confidence or refuses the claim.\n- [ ] Fabricated citations are blocked by regression tests.\n- [ ] Source removal or expiry invalidates affected retrieval results."
     }
   ]
 }
