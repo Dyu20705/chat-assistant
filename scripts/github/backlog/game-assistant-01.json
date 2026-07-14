@@ -1,0 +1,41 @@
+{
+  "repository": "Dyu20705/game-assistant",
+  "epic_key": "GA-AI-001",
+  "issues": [
+    {
+      "key": "GA-AI-001",
+      "title": "[AI ECOSYSTEM][EPIC] Make Game Assistant a standalone coach and gateway capability",
+      "labels": ["type:epic","area:game","area:ai-ecosystem","priority:p0","cross-repo","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep the CLI-first coach independently usable while exposing evidence-based rhythm-game coaching to Quân Sư.\n\n## Scope\n\n- osu!mania first.\n- Coach-only and non-cheat boundary.\n- No Discord or game-client runtime dependency.\n\n## Acceptance criteria\n\n- [ ] Requirements, contract, implementation, tests, QA, packaging, release, and maintenance are linked.\n- [ ] Evidence, prompts, analysis, and player data remain in this repository."
+    },
+    {
+      "key": "GA-AI-002",
+      "title": "[REQUIREMENTS] Define gateway-safe game coaching use cases and evidence policy",
+      "labels": ["type:requirements","area:game","priority:p0","single-user-mvp","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nDefine the smallest Discord-mediated use cases without widening into live assistance.\n\n## Scope\n\n- Safe player summary, submit/reference a result, evidence-based review, training plan, and progress summary.\n- Allowed evidence, retention, correction, duplicate handling, and unsupported formats.\n- No autoplay, memory reading, anti-cheat bypass, or live tactical assistance.\n\n## Acceptance criteria\n\n- [ ] Every use case defines structured input/output, side effects, idempotency, timeout, and safety refusal.\n- [ ] Attachment and evidence ownership are explicit.\n- [ ] CLI and gateway share application services."
+    },
+    {
+      "key": "GA-OD-001",
+      "title": "[INTEGRATION] Expose a stable game application-service contract",
+      "labels": ["type:design","area:game","area:integration","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": ["[INTEGRATION][TASK] Expose a stable application-service contract for local gateways"],
+      "body": "## Outcome\n\nPublish a versioned machine-readable contract for trusted local gateways.\n\n## Scope\n\n- Discovery, readiness, player summary, result submission/reference, coach review, training plan, and progress.\n- Stable errors for invalid evidence, insufficient evidence, safety refusal, unavailable provider, timeout, and internal failure.\n\n## Acceptance criteria\n\n- [ ] No database tables, parser internals, or gameplay automation are exposed.\n- [ ] Contract fixtures are deterministic and Discord-independent.\n- [ ] At least one evidence-based operation works end to end.\n- [ ] Standalone CLI remains usable."
+    },
+    {
+      "key": "GA-AI-004",
+      "title": "[IMPLEMENTATION] Build shared intake, analysis, review, and planning application services",
+      "labels": ["type:implementation","area:game","priority:p0","status:blocked"],
+      "match_titles": [],
+      "body": "## Outcome\n\nExpose framework-neutral use cases behind CLI and gateway adapters.\n\n## Scope\n\n- Validated evidence registration, analysis, weakness diagnosis, coach review, training plan, and progress.\n- Explicit transaction, duplicate, insufficient-evidence, and cancellation behavior.\n\n## Acceptance criteria\n\n- [ ] No Discord objects or paths from untrusted callers reach domain services.\n- [ ] Writes are idempotent or reject duplicates predictably.\n- [ ] Plans and reviews cite evidence references.\n- [ ] Delivery failure does not duplicate analysis records."
+    },
+    {
+      "key": "GA-AI-005",
+      "title": "[IMPLEMENTATION] Add structured coach prompts and provider validation",
+      "labels": ["type:implementation","area:game","priority:p1","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep Ollama-generated coaching grounded in deterministic analysis and safety rules.\n\n## Scope\n\n- Versioned prompt contracts, structured outputs, evidence requirements, provider timeout/cancellation, and post-generation validation.\n\n## Acceptance criteria\n\n- [ ] The model cannot invent evidence or override coach-only refusals.\n- [ ] Insufficient evidence produces an explicit result.\n- [ ] Prompts are not copied into Quân Sư or Mama.\n- [ ] Fake provider tests cover all result forms."
+    }
+  ]
+}
