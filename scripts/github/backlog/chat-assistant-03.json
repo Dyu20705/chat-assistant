@@ -1,0 +1,48 @@
+{
+  "repository": "Dyu20705/chat-assistant",
+  "epic_key": "CA-AI-001",
+  "issues": [
+    {
+      "key": "CA-AI-013",
+      "title": "[INTEGRATION] Implement the Health Assistant adapter",
+      "labels": ["type:implementation","area:integration","area:health","priority:p0","cross-repo","status:blocked"],
+      "match_titles": [],
+      "body": "## Outcome\n\nImplement a gateway adapter against the reviewed public application-service contract from `Dyu20705/health-assistant`.\n\n## Scope\n\n- Capability discovery and version checks.\n- Typed request/result translation.\n- Timeout, cancellation, health, and stable error mapping.\n- No private-module imports, database access, or human CLI parsing.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-007\n- CA-AI-008\n- Public contract in `Dyu20705/health-assistant`.\n\n## Acceptance criteria\n\n- [ ] Contract fixtures pass in both producer and gateway repositories.\n- [ ] Unavailable or incompatible assistants degrade independently.\n- [ ] Domain safety refusals and validation errors preserve their meaning.\n- [ ] The adapter contains orchestration only, not domain prompts or policy."
+    },
+    {
+      "key": "CA-AI-014",
+      "title": "[INTEGRATION] Publish the stable consumer API for Mama Tổng Quản",
+      "labels": ["type:implementation","area:gateway","area:integration","priority:p0","cross-repo","status:blocked"],
+      "match_titles": ["[INTEGRATION] Publish the my-discord-bot consumer gateway API"],
+      "body": "## Outcome\n\nExpose the authenticated local HTTP/JSON API consumed only by `my-discord-bot` in the MVP.\n\n## Scope\n\n- Health/readiness, capability discovery, request submission, result, progress, and cancellation.\n- Request size, connection, timeout, replay, and authentication controls.\n- OpenAPI or equivalent machine-readable contract.\n\n## Dependencies\n\n- CA-AI-002\n- CA-AI-003\n- CA-AI-004\n- CA-AI-007\n\n## Acceptance criteria\n\n- [ ] The API binds only to loopback or a private network by default.\n- [ ] Raw Discord objects and tokens are rejected.\n- [ ] Compatibility and error fixtures are published.\n- [ ] Mutation semantics and retryability are explicit."
+    },
+    {
+      "key": "CA-AI-015",
+      "title": "[SECURITY] Implement safe content and temporary attachment staging",
+      "labels": ["type:implementation","area:gateway","area:integration","priority:p0","cross-repo","status:blocked"],
+      "match_titles": ["[SECURITY] Implement safe request content and attachment staging"],
+      "body": "## Outcome\n\nHandle bounded request content and opaque temporary file references without exposing arbitrary filesystem access.\n\n## Scope\n\n- Allowlisted content types and sizes after Discord-side validation.\n- Per-request staging, hashes, expiry, cleanup, and path traversal prevention.\n- Specialist-specific acceptance occurs after gateway validation.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-004\n- CA-AI-008\n- CA-AI-014\n\n## Acceptance criteria\n\n- [ ] Callers cannot select arbitrary paths or commands.\n- [ ] Temporary data is deleted on success, rejection, timeout, cancellation, and crash recovery.\n- [ ] Health attachments remain disabled until separately approved.\n- [ ] Tests cover malformed, oversized, duplicate, expired, and malicious references."
+    },
+    {
+      "key": "CA-AI-016",
+      "title": "[IMPLEMENTATION] Add structured results and delivery metadata",
+      "labels": ["type:implementation","area:gateway","area:integration","priority:p1","status:blocked"],
+      "match_titles": ["[FEATURE] Implement structured result and delivery metadata"],
+      "body": "## Outcome\n\nReturn transport-neutral content and presentation hints that Mama can safely render in Discord.\n\n## Scope\n\n- Short text, paginated text, structured sections, progress, warnings, citations/provenance, and optional file-backed output.\n- Explicit privacy and urgency metadata for health results.\n- No Discord embeds or interaction objects.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-014\n\n## Acceptance criteria\n\n- [ ] Every result form has limits and validation.\n- [ ] Unsafe or incompatible presentation hints are rejected.\n- [ ] Emergency health content is mandatory and non-optional.\n- [ ] The bot can render results without interpreting specialist database schemas."
+    },
+    {
+      "key": "CA-AI-017",
+      "title": "[TEST] Add protocol, router, adapter, and cross-repository compatibility tests",
+      "labels": ["type:test","area:gateway","area:integration","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": ["[TEST] Add CI, unit-test foundation, and contract fixtures","[TEST] Add cross-repository contract and compatibility tests"],
+      "body": "## Outcome\n\nCreate an offline quality gate that detects contract drift across all five AI repositories.\n\n## Scope\n\n- Protocol schema and golden fixtures.\n- HTTP consumer/provider tests.\n- Generic, language, game, and health adapter fakes.\n- Version-window and deprecation matrix.\n- Concurrency, cancellation, cleanup, and error translation.\n\n## Acceptance criteria\n\n- [ ] Default CI needs no Discord, Ollama, or real user data.\n- [ ] Producer and consumer fixtures agree.\n- [ ] Malformed and future-version payloads fail predictably.\n- [ ] Health safety errors cannot be downgraded to generic internal errors."
+    },
+    {
+      "key": "CA-AI-018",
+      "title": "[QA] Run load, failure-injection, privacy, and safety evaluation",
+      "labels": ["type:qa","area:gateway","area:ai-ecosystem","priority:p0","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nValidate the release candidate under realistic local CPU constraints and dependency failures.\n\n## Scope\n\n- Concurrent generic/specialist requests, queue saturation, slow Ollama, adapter crash, malformed responses, cancellation, and restart.\n- Content-free log inspection and attachment cleanup.\n- Health fail-closed and urgent/emergency scenarios using synthetic fixtures.\n\n## Acceptance criteria\n\n- [ ] Resource use stays within documented laptop limits.\n- [ ] No request crosses user or capability boundaries.\n- [ ] No raw private content or secrets appear in logs.\n- [ ] Failure injection does not corrupt assistant-owned storage or block unrelated capabilities."
+    }
+  ]
+}
