@@ -11,10 +11,17 @@
     },
     {
       "key": "CA-AI-020",
-      "title": "[DEMO] Prove generic, language, game, and health end-to-end workflows",
-      "labels": ["type:qa","area:ai-ecosystem","priority:p1","cross-repo","status:blocked"],
-      "match_titles": ["[DEMO] Build the end-to-end language coaching workflow","[DEMO] Build the end-to-end game coaching workflow"],
-      "body": "## Outcome\n\nProvide repeatable synthetic end-to-end demonstrations from Mama through Quân Sư to each approved capability.\n\n## Scope\n\n- Generic advisor chat.\n- Language mission and correction.\n- Game evidence review and training plan.\n- Health workflow only after safety gates pass.\n- Unavailable, timeout, cancellation, and incompatible-version examples.\n\n## Acceptance criteria\n\n- [ ] Each demo records repository SHAs and contract versions.\n- [ ] Demos work with deterministic fakes; optional live Ollama smoke tests are separately marked.\n- [ ] No real learner, player, or health data is required."
+      "title": "[DEMO] Build the end-to-end generic and language coaching workflows",
+      "labels": ["type:qa","area:ai-ecosystem","area:language","priority:p1","cross-repo","status:blocked"],
+      "match_titles": ["[DEMO] Build the end-to-end language coaching workflow"],
+      "body": "## Outcome\n\nProvide repeatable end-to-end demonstrations for normal Quân Sư chat and one advanced language coaching flow.\n\n## Scope\n\n- Start Mama, Quân Sư, deterministic fakes, and optionally local Ollama.\n- Generic advisor request and bounded result delivery.\n- Language mission, answer correction, persistence, and safe Discord delivery.\n- Unavailable, timeout, cancellation, and incompatible-version examples.\n\n## Acceptance criteria\n\n- [ ] The demo records repository SHAs and contract versions.\n- [ ] Delivery failure does not duplicate language writes.\n- [ ] The workflow runs with deterministic fakes; live Ollama smoke is separately marked.\n- [ ] No real learner data is required."
+    },
+    {
+      "key": "CA-AI-024",
+      "title": "[DEMO] Build the end-to-end game coaching workflow",
+      "labels": ["type:qa","area:ai-ecosystem","area:game","priority:p1","cross-repo","status:blocked"],
+      "match_titles": ["[DEMO] Build the end-to-end game coaching workflow"],
+      "body": "## Outcome\n\nProvide a repeatable evidence-to-review-to-training-plan demonstration from Mama through Quân Sư to Game Assistant.\n\n## Scope\n\n- Synthetic score/session evidence and optional approved temporary attachment.\n- Validation, analysis, review, plan, result delivery, and cleanup.\n- Invalid evidence, insufficient evidence, unavailable provider, timeout, cancellation, and safety refusal.\n\n## Acceptance criteria\n\n- [ ] The demo records repository SHAs and contract versions.\n- [ ] Temporary evidence is removed according to ownership rules.\n- [ ] No live game assistance or private replay is required.\n- [ ] Safety refusal cannot fall back to generic chat."
     },
     {
       "key": "CA-AI-021",
