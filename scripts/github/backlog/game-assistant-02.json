@@ -1,0 +1,41 @@
+{
+  "repository": "Dyu20705/game-assistant",
+  "epic_key": "GA-AI-001",
+  "issues": [
+    {
+      "key": "GA-AI-006",
+      "title": "[DATA] Enforce player identity, evidence retention, migrations, export, and deletion",
+      "labels": ["type:implementation","area:game","priority:p0","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nProtect player records and local evidence while supporting backup and future multi-user migration.\n\n## Scope\n\n- Stable external player identity.\n- Source-file registration versus copying policy.\n- Migrations, backup, restore, export, deletion, and content-free audit metadata.\n\n## Acceptance criteria\n\n- [ ] Consumers cannot access arbitrary files or player IDs.\n- [ ] Source and derived records have provenance and retention.\n- [ ] Deleting a profile handles linked data according to policy.\n- [ ] Migrations and restore are tested."
+    },
+    {
+      "key": "GA-AI-007",
+      "title": "[TEST] Publish game contract fixtures and offline regression coverage",
+      "labels": ["type:test","area:game","area:integration","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nTest intake boundaries, analysis, safety, planning, storage, and public contracts without real games or Ollama.\n\n## Scope\n\n- Valid/invalid evidence fixtures, insufficient evidence, duplicate submission, cancellation, unavailable provider, migrations, and stable errors.\n\n## Acceptance criteria\n\n- [ ] Default CI requires no game installation, Discord, network, or private replay.\n- [ ] Gateway fixtures pass in `chat-assistant`.\n- [ ] Non-cheat invariants are explicit regression tests.\n- [ ] Contract drift fails CI."
+    },
+    {
+      "key": "GA-AI-008",
+      "title": "[QA] Evaluate evidence quality, coaching usefulness, and non-cheat safety",
+      "labels": ["type:qa","area:game","priority:p0","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nValidate that recommendations are grounded, practical, and never become unfair live assistance.\n\n## Scope\n\n- Synthetic 4K/7K sessions, accuracy, timing, stamina, reading, long-note, and insufficient-evidence cases.\n- Adversarial prompts requesting automation, memory access, bypasses, or unsupported certainty.\n\n## Acceptance criteria\n\n- [ ] Every recommendation traces to evidence or is labeled as a hypothesis.\n- [ ] Safety refusals cannot be bypassed by prompt wording.\n- [ ] Model changes are compared against an approved evaluation baseline.\n- [ ] False diagnosis and overconfident plan rates are reviewed."
+    },
+    {
+      "key": "GA-AI-009",
+      "title": "[DEPLOY] Package and version Game Assistant for gateway consumption",
+      "labels": ["type:deploy","area:game","area:integration","priority:p1","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nProduce a reproducible wheel or approved isolated service with explicit contract and data-path configuration.\n\n## Scope\n\n- Build, health, resource limits, evidence directories, package pinning, migrations, upgrade, and rollback.\n\n## Acceptance criteria\n\n- [ ] No checkout-path or game-installation assumption exists.\n- [ ] Quân Sư uses only the released contract.\n- [ ] Package installation has no game-client side effects.\n- [ ] Windows and Linux smoke tests pass."
+    },
+    {
+      "key": "GA-AI-010",
+      "title": "[RELEASE] Validate standalone and Discord-mediated game coaching",
+      "labels": ["type:release","area:game","area:ai-ecosystem","priority:p1","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nValidate one complete evidence-to-review-to-training-plan flow through CLI and Mama → Quân Sư.\n\n## Scope\n\n- Attachment cleanup, duplicate submission, restart, unavailable Ollama, insufficient evidence, backup/restore, and rollback.\n\n## Acceptance criteria\n\n- [ ] Exact SHAs, contract, prompt, model, and fixture versions are recorded.\n- [ ] No live game assistance or client modification occurs.\n- [ ] Previous package and data versions can be restored."
+    }
+  ]
+}
