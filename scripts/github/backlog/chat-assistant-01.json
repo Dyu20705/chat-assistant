@@ -6,7 +6,7 @@
       "key": "CA-AI-001",
       "title": "[AI ECOSYSTEM][EPIC] Build Quân Sư as the local AI gateway and advisor",
       "labels": ["type:epic","area:gateway","area:ai-ecosystem","priority:p0","cross-repo","single-user-mvp"],
-      "match_titles": ["[EPIC] Define four-repository ecosystem architecture and ownership"],
+      "match_titles": [],
       "body": "## Outcome\n\nTransform `chat-assistant` into the transport-neutral Quân Sư service: normal advisor chat plus orchestration of language, game, and health assistants.\n\n## Scope\n\n- Five-repository AI ecosystem: `my-discord-bot`, `chat-assistant`, `lang-assistant`, `game-assistant`, and `health-assistant`.\n- `red-cogs` remains a separately operated music subsystem coordinated only at the server level.\n- No Discord token or Discord gateway in this repository after migration.\n\n## Acceptance criteria\n\n- [ ] All child issues cover requirements, architecture, implementation, contracts, security, test, QA, deployment, release, and maintenance.\n- [ ] Generic advisor chat is separated from specialist capabilities.\n- [ ] The single-owner MVP and future multi-user boundary are explicit.\n\n## Definition of done\n\nQuân Sư can serve Mama Tổng Quản through a private local API and route approved work without owning specialist domain data."
     },
     {
