@@ -32,10 +32,17 @@
     },
     {
       "key": "CA-AI-017",
-      "title": "[TEST] Add protocol, router, adapter, and cross-repository compatibility tests",
-      "labels": ["type:test","area:gateway","area:integration","priority:p0","cross-repo","ready-for-agent"],
-      "match_titles": ["[TEST] Add CI, unit-test foundation, and contract fixtures","[TEST] Add cross-repository contract and compatibility tests"],
-      "body": "## Outcome\n\nCreate an offline quality gate that detects contract drift across all five AI repositories.\n\n## Scope\n\n- Protocol schema and golden fixtures.\n- HTTP consumer/provider tests.\n- Generic, language, game, and health adapter fakes.\n- Version-window and deprecation matrix.\n- Concurrency, cancellation, cleanup, and error translation.\n\n## Acceptance criteria\n\n- [ ] Default CI needs no Discord, Ollama, or real user data.\n- [ ] Producer and consumer fixtures agree.\n- [ ] Malformed and future-version payloads fail predictably.\n- [ ] Health safety errors cannot be downgraded to generic internal errors."
+      "title": "[TEST] Add CI, unit-test foundation, and protocol fixtures",
+      "labels": ["type:test","area:gateway","priority:p0","ready-for-agent"],
+      "match_titles": ["[TEST] Add CI, unit-test foundation, and contract fixtures"],
+      "body": "## Outcome\n\nEstablish deterministic local quality gates for the gateway foundation and protocol models.\n\n## Scope\n\n- Format, lint, typing, unit tests, dependency review, secret scanning, protocol schema validation, and stable success/error fixtures.\n- No live Discord, Ollama, or private data in default CI.\n\n## Acceptance criteria\n\n- [ ] CI validates every supported Python version and package entry point.\n- [ ] Protocol fixtures cover generic, language, game, and health envelopes.\n- [ ] Malformed and unsupported-version payloads fail predictably.\n- [ ] Coverage and dependency policies are documented."
+    },
+    {
+      "key": "CA-AI-023",
+      "title": "[TEST] Add cross-repository contract and compatibility tests",
+      "labels": ["type:test","area:gateway","area:integration","priority:p0","cross-repo","status:blocked"],
+      "match_titles": ["[TEST] Add cross-repository contract and compatibility tests"],
+      "body": "## Outcome\n\nDetect producer-consumer drift across Mama, Quân Sư, and all three specialist application-service contracts.\n\n## Scope\n\n- Supported version matrix, golden fixtures, HTTP consumer/provider tests, adapter fakes, stable errors, deprecation windows, and health safety metadata.\n- Concurrency, cancellation, cleanup, and incompatible dependency behavior at contract boundaries.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-011 through CA-AI-014\n- Public contracts from Lang, Game, and Health Assistant.\n\n## Acceptance criteria\n\n- [ ] Producer and consumer fixtures agree without private imports.\n- [ ] Contract drift fails CI before release.\n- [ ] One incompatible specialist does not disable unrelated capabilities.\n- [ ] Health safety errors cannot be downgraded or replaced by generic responses."
     },
     {
       "key": "CA-AI-018",
