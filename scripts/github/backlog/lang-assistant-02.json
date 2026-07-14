@@ -1,0 +1,41 @@
+{
+  "repository": "Dyu20705/lang-assistant",
+  "epic_key": "LA-AI-001",
+  "issues": [
+    {
+      "key": "LA-AI-006",
+      "title": "[DATA] Enforce learner identity, migration, retention, export, and deletion boundaries",
+      "labels": ["type:implementation","area:language","priority:p0","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nProtect the owner's profile and learning history while preserving future multi-user migration.\n\n## Scope\n\n- Stable external learner identity mapping.\n- SQLite/JSON migration, backup, export, delete, and restore.\n- Content-free audit metadata.\n\n## Acceptance criteria\n\n- [ ] Consumers cannot select arbitrary learner IDs.\n- [ ] Migrations are idempotent and recoverable.\n- [ ] Delete/export cover every stored record owned by the repository.\n- [ ] Logs exclude submissions, prompts, and corrections by default."
+    },
+    {
+      "key": "LA-AI-007",
+      "title": "[TEST] Publish language contract fixtures and full offline test coverage",
+      "labels": ["type:test","area:language","area:integration","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nProvide deterministic producer fixtures and tests for application services, storage, prompts, and adapters.\n\n## Scope\n\n- Success and stable error fixtures.\n- Migration and rollback fixtures.\n- Correction/retry and mission idempotency.\n- Cancellation and unavailable-provider tests.\n\n## Acceptance criteria\n\n- [ ] Default tests require no network or real data.\n- [ ] Gateway fixtures pass unchanged in `chat-assistant`.\n- [ ] Contract drift fails CI.\n- [ ] Privacy assertions inspect logs and exports."
+    },
+    {
+      "key": "LA-AI-008",
+      "title": "[QA] Evaluate coaching quality, adaptation, and regression behavior",
+      "labels": ["type:qa","area:language","priority:p1","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nValidate that English/Japanese coaching is strict, useful, grounded in learner history, and stable across prompt/model changes.\n\n## Scope\n\n- Synthetic IELTS writing, work communication, Japanese grammar, retry, and adaptive mission suites.\n- Scoring rubric, false praise, hallucination, correction consistency, and insufficient-context cases.\n\n## Acceptance criteria\n\n- [ ] Evaluation criteria and baselines are versioned.\n- [ ] Regressions block release or require an explicit waiver.\n- [ ] No evaluation uses private learner history by default.\n- [ ] Model changes are compared against the current approved baseline."
+    },
+    {
+      "key": "LA-AI-009",
+      "title": "[DEPLOY] Package and version Lang Assistant for gateway consumption",
+      "labels": ["type:deploy","area:language","area:integration","priority:p1","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nProduce reproducible wheels or an approved isolated local service with explicit contract versions.\n\n## Scope\n\n- Pinned build, package metadata, configuration, data paths, health/readiness, and upgrade/rollback.\n- No checkout-path assumptions.\n\n## Acceptance criteria\n\n- [ ] Quân Sư consumes only a released public contract.\n- [ ] Package installation does not start network services or read production data.\n- [ ] Data migrations and rollback are documented.\n- [ ] Windows and Linux smoke tests pass."
+    },
+    {
+      "key": "LA-AI-010",
+      "title": "[RELEASE] Validate standalone and Discord-mediated language coaching",
+      "labels": ["type:release","area:language","area:ai-ecosystem","priority:p1","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nRelease only after the same use cases work through CLI and through Mama → Quân Sư.\n\n## Scope\n\n- Mission, correction/retry, explanation/drill, progress, restart, unavailable Ollama, migration, backup, and rollback.\n\n## Acceptance criteria\n\n- [ ] Exact SHAs, contract, prompt, and model versions are recorded.\n- [ ] No direct Discord dependency exists.\n- [ ] Delivery failure does not duplicate stored corrections.\n- [ ] Previous data and package versions can be restored."
+    }
+  ]
+}
