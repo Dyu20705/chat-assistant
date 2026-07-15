@@ -19,11 +19,11 @@ There are 26 open issues and no open pull requests. The managed Quân Sư epic c
 | Local branch at discovery | `git status --short --branch` | `main`, initially 9 commits behind; fast-forwarded to `origin/main` |
 | Local remote at discovery | `.git/config`, `git remote -v` | Legacy `Dyu20705/ollama-discord`; corrected to canonical URL |
 | Current baseline SHA | `git rev-parse origin/main` | `4fbf12f376dfb6b1e4294b1316bdafc2641599c1` |
-| Worktree after refresh | `git status --short --branch` | Current with `origin/main`; only `docs/adr/` is untracked |
+| Worktree after refresh | `git status --short --branch` | Current with `origin/main`; pre-existing untracked documentation was preserved and excluded |
 | Open GitHub work | GitHub issue/PR queries | 26 open issues; 0 open PRs |
 | Current-main CI | GitHub Actions run `29395618785` | Passed on Python 3.11, 3.12, and 3.13 matrix |
 
-The untracked file `docs/adr/0002-hybrid-local-transport-topology.md` was preserved and excluded from the governance branch. It selects CLI subprocess adapters for specialist assistants, while the current managed issue #2 outcome selects Python public-service adapters with a migration path to isolated services. It is therefore a local draft requiring owner reconciliation, not accepted architecture evidence.
+Pre-existing untracked documentation was preserved and excluded from the governance branch. Because it is neither committed nor publicly linked, this audit does not use its contents as architecture, dependency, or blocking evidence.
 
 ## Current package and module boundaries
 
@@ -96,7 +96,6 @@ Local validation covers Python 3.11; GitHub Actions supplies Python 3.12 and 3.1
 | README heading, package name, architecture prose, and many issue links use `ollama-discord` | Stale rename reference; links redirect safely | Migrate names when the affected issue owns compatibility and packaging; do not rename blindly in unrelated PRs |
 | `my-discord-bot` issue #56 also refers to `ollama-assistant` | Stale intermediate rename | Refine the cross-repository issue after canonical topology is accepted |
 | `docs/ecosystem-architecture.md` defines four repositories and omits Health Assistant | Superseded scope, not a duplicate | Complete issue #24 before issue #2 is accepted |
-| Local untracked ADR selects specialist CLI subprocesses | Conflicting draft | Reconcile against the managed issue #2 outcome; keep excluded until owner approval |
 | Issue #5 asks for project/test foundations already partly present | Partially implemented, target behavior absent | Refine acceptance evidence around package migration and removal of Discord ownership; do not close |
 | Issue #9 has a direct Ollama client in legacy `bot.py` | Partially implemented in the wrong boundary | Replace with a Discord-independent provider adapter; legacy code is not acceptance evidence |
 | Issue #10 has CI, tests, coverage, lint, audit, and actionlint | Partially implemented | Retain for package entry points, typing/format/secret policy as approved, protocol schemas, and success/error fixtures |

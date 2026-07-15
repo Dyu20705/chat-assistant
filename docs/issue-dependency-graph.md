@@ -9,7 +9,7 @@ Scope: all 26 open issues in `Dyu20705/chat-assistant`, plus direct cross-reposi
 | Issue | Type | Depends on | Blocked by current evidence | Responsible repository | Risk | Proposed order/state |
 | --- | --- | --- | --- | --- | --- | --- |
 | [#24](https://github.com/Dyu20705/chat-assistant/issues/24) Add Health Assistant to architecture | Architecture | Closed #1 ownership baseline | None for documentation; merge requires human architecture approval | `chat-assistant`, coordinated with all five repos | Critical | 1 — first product issue after governance bootstrap |
-| [#2](https://github.com/Dyu20705/chat-assistant/issues/2) Select transport/topology | Architecture/ADR | #24 **inferred** | Five-repo architecture drift; conflicting local ADR draft; human approval | `chat-assistant` | Critical | 2 — refine, propose, wait for approval |
+| [#2](https://github.com/Dyu20705/chat-assistant/issues/2) Select transport/topology | Architecture/ADR | #24 **inferred** | Five-repo architecture drift; topology unresolved; human approval | `chat-assistant` | Critical | 2 — refine, propose, wait for approval |
 | [#3](https://github.com/Dyu20705/chat-assistant/issues/3) Versioned capability protocol | Public contract | #2, #24 **inferred** | #2 open; human public-schema approval | `chat-assistant`, fixtures consumed by all five repos | Critical | 3 |
 | [#4](https://github.com/Dyu20705/chat-assistant/issues/4) Identity/privacy/data ownership | Security/contract | #2, #3, #24 **inferred** | #2 and #3 open; human security/privacy approval | All five repos; policy recorded in `chat-assistant` | Critical | 4 |
 | [#5](https://github.com/Dyu20705/chat-assistant/issues/5) Remove Discord runtime and initialize gateway package | Refactor/implementation | #2, #24 **inferred** | #2 open; project foundation is only partially present | `chat-assistant` | High | 5 |
@@ -82,7 +82,7 @@ flowchart TD
 
 ## Refinement required before implementation
 
-1. Reconcile #24 and #2 with the canonical five-repository architecture and choose one specialist adapter topology; do not promote the untracked ADR by accident.
+1. Reconcile #24 and #2 with the canonical five-repository architecture and choose one specialist adapter topology using only committed or publicly linked review evidence.
 2. Add #17 and #24 to the managed roadmap or explicitly close them with evidence. Issue #17 should retain only observability work not already owned by #6, #9, or #20.
 3. Update #5, #9, and #10 to distinguish existing legacy/partial foundations from target gateway acceptance criteria.
 4. Add missing dependency edges to #18-#21, #29, #31, and #32; normalize contradictory blocked/ready labels.
