@@ -2,17 +2,18 @@
 
 ## Project purpose
 
-`Dyu20705/chat-assistant` is being migrated from a single-file Discord/Ollama bot into Quân Sư, a transport-neutral local AI gateway. The target service provides generic advisor chat and routes approved language, game, and health capabilities for `Dyu20705/my-discord-bot`, which remains the only Discord runtime and Discord-token owner.
+`Dyu20705/chat-assistant` currently contains a single-file Discord/Ollama bot. The managed roadmap proposes migrating it into Quân Sư, a transport-neutral local AI gateway for `Dyu20705/my-discord-bot`, which remains the only Discord runtime and Discord-token owner. Generic advisor chat, the Health Assistant extension, and the concrete transport remain proposals until their owning issues and human approval gates are complete.
 
 The current `bot.py` is legacy behavior, not the target architecture. Do not treat its Discord commands, memory, attachment handling, or direct Ollama calls as the future gateway contract.
 
 ## Architecture boundaries
 
 - `my-discord-bot` owns Discord connectivity, tokens, command registration, Discord authorization, interaction acknowledgement, cooldowns, attachment download policy, and Discord presentation.
-- `chat-assistant` owns the local gateway API, protocol envelopes, caller-context validation, capability routing, generic advisor behavior, request correlation, deadlines, cancellation, back-pressure, dependency health, safe gateway errors, and public assistant adapters.
-- `lang-assistant`, `game-assistant`, and `health-assistant` own their domain rules, prompts, model calls, private data, persistence, migrations, validation, and public application-service contracts.
+- Under the accepted four-repository boundary, `chat-assistant` owns transport-neutral gateway orchestration, protocol envelopes, caller-context validation, capability routing, request correlation, deadlines, cancellation, back-pressure, dependency health, safe gateway errors, and public language/game assistant adapters. Issue #2 still owns the concrete transport, and generic advisor behavior requires separate approval.
+- `lang-assistant` and `game-assistant` own their domain rules, prompts, model calls, private data, persistence, migrations, validation, and public application-service contracts.
+- Issue #24 proposes adding `health-assistant` under the same domain-ownership rule. Until approved, health is not part of the accepted architecture. If enabled later, it must fail closed and retain stricter safety, privacy, evidence, QA, and release gates.
 - Cross-repository access must use reviewed, versioned public contracts. Never import private modules, read another repository's database or profile files, parse human-oriented CLI output, assume adjacent checkout paths, or share mutable storage.
-- Health behavior fails closed. Generic chat must never impersonate or silently replace a health, language, or game capability.
+- Generic chat must never impersonate or silently replace a specialist capability. Any future approved health path must fail closed.
 - Architecture decisions in `docs/ecosystem-architecture.md` remain authoritative only where they have not been superseded by an accepted ADR. Keep the document aligned with the canonical five-repository roadmap before implementation relies on it.
 
 See `docs/repository-context.md` and `docs/issue-dependency-graph.md` for the dated Phase 0 audit and execution dependencies.

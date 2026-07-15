@@ -38,21 +38,21 @@ This is a single-package repository, not a monorepo. There is no `src/` package 
 
 ## Architecture and ownership baseline
 
-The accepted dependency direction remains:
+The accepted four-repository dependency direction remains:
 
 ```text
 Discord user
   -> my-discord-bot
   -> chat-assistant
-  -> lang-assistant | game-assistant | health-assistant
+  -> lang-assistant | game-assistant
   -> local Ollama where approved
 ```
 
 - `my-discord-bot` is the only Discord runtime and token owner.
-- `chat-assistant` is the future local HTTP/JSON gateway and generic advisor.
-- Specialist repositories own domain policy, prompts, model use, private data, persistence, and public contracts.
+- `chat-assistant` owns transport-neutral gateway orchestration; issue #2 still owns the concrete transport, and generic advisor behavior requires separate approval.
+- `lang-assistant` and `game-assistant` own domain policy, prompts, model use, private data, persistence, and public contracts.
 - Cross-repository database access, private imports, human-output parsing, fixed checkout paths, arbitrary command execution, and generic fallback for specialist failures are forbidden.
-- Health integration is conditional and must remain disabled until its stricter safety, privacy, evidence, QA, and release gates pass.
+- The managed roadmap proposes extending this direction to `health-assistant` through issue #24 and selecting local HTTP/JSON through issue #2. Neither proposal is accepted by this audit. If health is approved later, it must remain disabled until its stricter safety, privacy, evidence, QA, and release gates pass.
 
 Issue #24 must update the four-repository architecture record before issue #2 finalizes topology for the five-repository system. Issues #2, #3, and #4 are human-approval gates because they change cross-repository architecture, public contracts, identity, privacy, and retention.
 
@@ -98,7 +98,8 @@ Local validation covers Python 3.11; GitHub Actions supplies Python 3.12 and 3.1
 | Issue #5 asks for project/test foundations already partly present | Partially implemented, target behavior absent | Refine acceptance evidence around package migration and removal of Discord ownership; do not close |
 | Issue #9 has a direct Ollama client in legacy `bot.py` | Partially implemented in the wrong boundary | Replace with a Discord-independent provider adapter; legacy code is not acceptance evidence |
 | Issue #10 has CI, tests, coverage, lint, audit, and actionlint | Partially implemented | Retain for package entry points, typing/format/secret policy as approved, protocol schemas, and success/error fixtures |
-| Issues #17 and #24 are not children of managed epic #33 and remain on older milestones | Orphaned active work | Refine ownership: add them to the managed roadmap or explicitly supersede/close them with evidence |
+| Issue #17 repeats structured logging/dependency-health/operations concerns from #6, #9, and #20 but retains unique metrics, tracing, bounded-cardinality, and audit-event scope | Partially duplicate and orphaned; no exact duplicate issue was found | Trim duplicated scope, preserve the unique observability acceptance criteria, and add the refined issue to the managed roadmap |
+| Issue #24 is not a child of managed epic #33 and remains on an older milestone | Orphaned active architecture work | Add it to the managed roadmap or explicitly supersede/close it with evidence |
 | Issues #2, #5, #6, #9, and #10 carry combinations of `ready-for-agent` with design/blocked labels | Contradictory workflow state | Normalize labels after dependency refinement |
 | Issues #18-#21 and #31-#32 omit material dependencies in their managed blocks | Incomplete dependency metadata | Update issue dependencies before implementation/release work |
 | Epic #33 is self-linked in its related-epic list | Harmless synchronizer artifact | Exclude or render the current epic separately in a future synchronizer maintenance change |
