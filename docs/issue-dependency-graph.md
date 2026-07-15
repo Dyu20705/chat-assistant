@@ -39,12 +39,12 @@ External `ready-for-agent` labels below are reported verbatim. They do not overr
 | [#11](https://github.com/Dyu20705/chat-assistant/issues/11) Lang adapter | Integration | #3, #7, #8; `lang-assistant` #62 | Producer contract #62 is open | `chat-assistant` consumer; `lang-assistant` producer | High | Parallel adapter lane after core |
 | [#12](https://github.com/Dyu20705/chat-assistant/issues/12) Game adapter | Integration | #3, #7, #8; `game-assistant` #46 | Producer contract #46 is open | `chat-assistant` consumer; `game-assistant` producer | High | Parallel adapter lane after core |
 | [#30](https://github.com/Dyu20705/chat-assistant/issues/30) Health adapter | Integration/safety | #3, #7, #8; `health-assistant` #21 and its safety/privacy/evidence gates | Health contract and upstream safety gates are blocked; human safety/privacy approval required | `chat-assistant` consumer; `health-assistant` producer | Critical | Optional gated lane; never blocks unrelated capabilities |
-| [#14](https://github.com/Dyu20705/chat-assistant/issues/14) Cross-repo compatibility tests | Integration test | #3, #10, #11, #12, #13, #30 when health is enabled; all corresponding producer contracts | Adapters and public fixtures are absent | `chat-assistant` with all enabled producers/consumers | Critical | After adapter/API fixtures |
+| [#14](https://github.com/Dyu20705/chat-assistant/issues/14) Cross-repo compatibility tests | Integration test | #3, #10, #11, #12, #13, #30 when health is enabled; `my-discord-bot` #109; all corresponding producer contracts | Adapters and public fixtures are absent | `chat-assistant` with all enabled producers/consumers | Critical | After adapter/API fixtures |
 | [#20](https://github.com/Dyu20705/chat-assistant/issues/20) Reproducible deployment/operations | Deployment | #2, #4, #5, #6, #8, #9, #13, #17; `my-discord-bot` #111; released assistant packages/endpoints | Service/package/API absent; human deployment/secret-handling approval required | `chat-assistant`, coordinated with deployed repos | Critical | After operational behavior exists |
-| [#31](https://github.com/Dyu20705/chat-assistant/issues/31) Load/failure/privacy/safety evaluation | QA | #8-#17, #20, #29; #30 only when health is proposed for enablement | Exact release candidate and resource/deployment limits do not exist; privacy/safety evidence needs human review | `chat-assistant` with synthetic cross-repo fixtures | Critical | Release-candidate QA |
+| [#31](https://github.com/Dyu20705/chat-assistant/issues/31) Load/failure/privacy/safety evaluation | QA | #8-#17, #20, #29; `my-discord-bot` #108-#110; #30/#107 only when health is proposed for enablement | Exact release candidate and resource/deployment limits do not exist; privacy/safety evidence needs human review | `chat-assistant` with synthetic cross-repo fixtures | Critical | Release-candidate QA |
 | [#18](https://github.com/Dyu20705/chat-assistant/issues/18) Generic/language end-to-end demo | QA/demo | #6, #10, #11, #13, #16, #17, #29; `my-discord-bot` #56/#103/#104/#105/#109; `lang-assistant` #62 | Gateway, bot client/features, and compatible language candidate are absent | `chat-assistant`, `my-discord-bot`, `lang-assistant` | High | Cross-repo evidence lane |
 | [#19](https://github.com/Dyu20705/chat-assistant/issues/19) Game end-to-end demo | QA/demo | #10, #12, #13, #15, #16; `my-discord-bot` #56/#103/#106/#109; `game-assistant` #46 | Gateway, bot client/feature, game contract, and attachment path are absent | `chat-assistant`, `my-discord-bot`, `game-assistant` | High | Cross-repo evidence lane |
-| [#32](https://github.com/Dyu20705/chat-assistant/issues/32) Upgrade/incident/deprecation policy | Maintenance/public guarantees | #3, #4, #6, #8, #14, #15, #17, #20 | Contract windows and operational behavior are unaccepted; final policy requires human approval | `chat-assistant`, coordinated with all consumers/producers | High | Before final release |
+| [#32](https://github.com/Dyu20705/chat-assistant/issues/32) Upgrade/incident/deprecation policy | Maintenance/public guarantees | #3, #4, #6, #8, #14, #15, #17, #20; `my-discord-bot` #113 | Contract windows and operational behavior are unaccepted; final policy requires human approval | `chat-assistant`, coordinated with all consumers/producers | High | Before final release |
 | [#21](https://github.com/Dyu20705/chat-assistant/issues/21) Five-repo release gate | Release | #14, #18, #19, #20, #31, #32; `my-discord-bot` #112; compatible producer release evidence | All release evidence is absent; health must be independently approved or proven disabled/fail-closed; human release approval mandatory | All five repositories | Critical | Final gate only; never agent-closed |
 | [#33](https://github.com/Dyu20705/chat-assistant/issues/33) Quân Sư epic | Epic/coordination | Every managed child, #17, #24, #37, and related repository epics | Entire roadmap; generated checklist omits manually coordinated #17/#24 | `chat-assistant`, coordinated across five repos | Critical | Coordination-only; close last |
 
@@ -58,9 +58,13 @@ External `ready-for-agent` labels below are reported verbatim. They do not overr
 | Generic Discord workflow | [`my-discord-bot#104`](https://github.com/Dyu20705/my-discord-bot/issues/104) | Open; `status:blocked` | Gates the generic portion of #18; depends on #103 and chat #29 |
 | Language Discord workflow | [`my-discord-bot#105`](https://github.com/Dyu20705/my-discord-bot/issues/105) | Open; `status:blocked` | Gates the language portion of #18; depends on #103, chat #11, and the language contract |
 | Game Discord workflow | [`my-discord-bot#106`](https://github.com/Dyu20705/my-discord-bot/issues/106) | Open; `status:blocked` | Gates #19; depends on #103, chat #12/#15, and the game contract |
+| Health Discord workflow | [`my-discord-bot#107`](https://github.com/Dyu20705/my-discord-bot/issues/107) | Open; `status:blocked` | Optional gated lane; depends on #103, chat #30, and all Health Assistant safety/contract gates |
+| Discord AI reliability | [`my-discord-bot#108`](https://github.com/Dyu20705/my-discord-bot/issues/108) | Open; `ready-for-agent` | Feature flags/isolation can progress with fakes; release-candidate evidence still waits on the client and enabled workflows |
 | Discord contract tests | [`my-discord-bot#109`](https://github.com/Dyu20705/my-discord-bot/issues/109) | Open; `ready-for-agent` | Fake/test foundations may progress, but complete compatibility evidence waits on chat #3/#10/#13 and #103 |
+| Discord manual QA | [`my-discord-bot#110`](https://github.com/Dyu20705/my-discord-bot/issues/110) | Open | Supplies designated-guild permission/privacy/lifecycle evidence for chat #31 and the bot release |
 | Discord deployment | [`my-discord-bot#111`](https://github.com/Dyu20705/my-discord-bot/issues/111) | Open | Must coordinate private-network, secrets, readiness, and rollback evidence with chat #20 |
 | Discord release | [`my-discord-bot#112`](https://github.com/Dyu20705/my-discord-bot/issues/112) | Open | Supplies the designated-guild and rollback evidence consumed by chat #21 |
+| Discord maintenance | [`my-discord-bot#113`](https://github.com/Dyu20705/my-discord-bot/issues/113) | Open | Coordinates command compatibility, incidents, and deprecation evidence with chat #32 and #112 |
 | Language producer contract | [`lang-assistant#62`](https://github.com/Dyu20705/lang-assistant/issues/62) | Open; `ready-for-agent` | #11 cannot implement against private modules or storage |
 | Game producer contract | [`game-assistant#46`](https://github.com/Dyu20705/game-assistant/issues/46) | Open; `ready-for-agent` | #12 cannot implement against private parsers, modules, or storage |
 | Health producer contract | [`health-assistant#21`](https://github.com/Dyu20705/health-assistant/issues/21) | Open; `status:blocked` | #30 remains blocked until intended-use, hazard, evidence, and privacy decisions are approved |
@@ -87,7 +91,8 @@ flowchart TD
     Config --> Provider["#9 Ollama provider"]
     Jobs --> Generic["#29 Generic advisor"]
     Provider --> Generic
-    ConsumerDesign["my-discord-bot #56"] --> Api["#13 Consumer API"]
+    Privacy --> ConsumerDesign["my-discord-bot #56"]
+    ConsumerDesign --> Api["#13 Consumer API"]
     Privacy --> Api
     Config --> Api
     Router --> Api
@@ -102,29 +107,75 @@ flowchart TD
     Jobs --> Observability
     Provider --> Observability
     Api --> Observability
-    Jobs --> Adapters["#11/#12/#30 Specialist adapters"]
-    External["External public contracts"] --> Adapters
+    Jobs --> LangAdapter["#11 Lang adapter"]
+    Jobs --> GameAdapter["#12 Game adapter"]
+    Jobs -.-> HealthAdapter["#30 Health adapter when enabled"]
+    LangContract["lang-assistant #62"] --> LangAdapter
+    GameContract["game-assistant #46"] --> GameAdapter
+    HealthGates["Health safety, privacy, and contract gates"] -.-> HealthAdapter
     TestBase --> Compat["#14 Compatibility tests"]
-    Adapters --> Compat
-    Client --> DiscordFeatures["my-discord-bot #104-#106"]
-    Generic --> DiscordFeatures
-    Adapters --> DiscordFeatures
-    Results --> Demos["#18/#19 E2E demos"]
-    DiscordFeatures --> Demos
-    Attachments --> Demos
-    Observability --> Demos
-    Api --> Deploy["#20 Deployment"]
+    Api --> Compat
+    LangAdapter --> Compat
+    GameAdapter --> Compat
+    HealthAdapter -.-> Compat
+    Client --> DiscordTests["my-discord-bot #109 contract tests"]
+    TestBase --> DiscordTests
+    DiscordTests --> Compat
+    Client --> GenericDiscord["my-discord-bot #104 generic"]
+    Generic --> GenericDiscord
+    Client --> LangDiscord["my-discord-bot #105 language"]
+    LangAdapter --> LangDiscord
+    Client --> GameDiscord["my-discord-bot #106 game"]
+    GameAdapter --> GameDiscord
+    Attachments --> GameDiscord
+    Client --> HealthDiscord["my-discord-bot #107 health when enabled"]
+    HealthAdapter -.-> HealthDiscord
+    Client --> DiscordReliability["my-discord-bot #108 reliability"]
+    TestBase --> LangDemo["#18 Generic/language demo"]
+    Results --> LangDemo
+    GenericDiscord --> LangDemo
+    LangDiscord --> LangDemo
+    Observability --> LangDemo
+    DiscordTests --> LangDemo
+    TestBase --> GameDemo["#19 Game demo"]
+    Results --> GameDemo
+    GameDiscord --> GameDemo
+    Attachments --> GameDemo
+    DiscordTests --> GameDemo
+    DiscordTests --> BotQA["my-discord-bot #110 QA"]
+    DiscordReliability --> BotQA
+    GenericDiscord --> BotQA
+    LangDiscord --> BotQA
+    GameDiscord --> BotQA
+    HealthDiscord -.-> BotQA
+    Client --> BotDeploy["my-discord-bot #111 deployment"]
+    BotDeploy --> Deploy["#20 Deployment"]
+    Api --> Deploy
     Observability --> Deploy
     Compat --> QA["#31 QA and failure injection"]
     Deploy --> QA
     Generic --> QA
+    Attachments --> QA
+    Results --> QA
+    Observability --> QA
+    BotQA --> QA
     Compat --> Maintenance["#32 Maintenance policy"]
     Deploy --> Maintenance
+    Attachments --> Maintenance
+    Observability --> Maintenance
+    BotMaintenance["my-discord-bot #113 maintenance"] --> Maintenance
+    BotQA --> BotRelease["my-discord-bot #112 release"]
+    BotDeploy --> BotRelease
+    BotMaintenance --> BotRelease
+    LangDemo --> BotRelease
+    GameDemo --> BotRelease
     Compat --> Release["#21 Release gate"]
-    Demos --> Release
+    LangDemo --> Release
+    GameDemo --> Release
     QA --> Release
     Deploy --> Release
     Maintenance --> Release
+    BotRelease --> Release
 ```
 
 ## Completed Phase 0 refinements
