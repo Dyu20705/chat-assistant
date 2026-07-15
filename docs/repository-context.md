@@ -72,7 +72,7 @@ PR CI passed on the reviewed heads, and current-main CI is green. However, autom
 
 ## Baseline verification
 
-The required local baseline was run on Python 3.11.9 after refreshing `main`:
+The required local baseline was run on Python 3.11.9 after refreshing `main`. Validation mirrored CI with `OLLAMA_DISCORD_SKIP_DOTENV=1`, `MAX_MEMORY_MESSAGES=0`, and `MEMORY_FILE` redirected under `.pytest_tmp` so it could not load developer configuration or persistent memory:
 
 | Check | Result |
 | --- | --- |

@@ -31,13 +31,16 @@ Run the checks relevant to every change. Before a PR is marked ready, run the co
 
 ```bash
 python -m pip install -e ".[dev]"
-OLLAMA_DISCORD_SKIP_DOTENV=1 python -m compileall -q bot.py tests
-OLLAMA_DISCORD_SKIP_DOTENV=1 python -c "import bot; print('import ok')"
+mkdir -p .pytest_tmp
+export OLLAMA_DISCORD_SKIP_DOTENV=1
+export MAX_MEMORY_MESSAGES=0
+export MEMORY_FILE="${PWD}/.pytest_tmp/ci-memory.json"
+python -m compileall -q bot.py tests
+python -c "import bot; print('import ok')"
 ruff check .
 pytest --cov --cov-report=term-missing
 python -m pip_audit --cache-dir .pip-audit-cache --progress-spinner off --strict .
 actionlint
-mkdir -p .pytest_tmp
 bash -n scripts/github/sync_ai_ecosystem_issues.sh
 DRY_RUN=true bash scripts/github/sync_ai_ecosystem_issues.sh > .pytest_tmp/ai-ecosystem-backlog.json
 test "$(jq -r '.totals.repositories' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
