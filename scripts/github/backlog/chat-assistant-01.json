@@ -1,0 +1,48 @@
+{
+  "repository": "Dyu20705/chat-assistant",
+  "epic_key": "CA-AI-001",
+  "issues": [
+    {
+      "key": "CA-AI-001",
+      "title": "[AI ECOSYSTEM][EPIC] Build Quân Sư as the local AI gateway and advisor",
+      "labels": ["type:epic","area:gateway","area:ai-ecosystem","priority:p0","cross-repo","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nTransform `chat-assistant` into the transport-neutral Quân Sư service: normal advisor chat plus orchestration of language, game, and health assistants.\n\n## Scope\n\n- Five-repository AI ecosystem: `my-discord-bot`, `chat-assistant`, `lang-assistant`, `game-assistant`, and `health-assistant`.\n- `red-cogs` remains a separately operated music subsystem coordinated only at the server level.\n- No Discord token or Discord gateway in this repository after migration.\n\n## Acceptance criteria\n\n- [ ] All child issues cover requirements, architecture, implementation, contracts, security, test, QA, deployment, release, and maintenance.\n- [ ] Generic advisor chat is separated from specialist capabilities.\n- [ ] The single-owner MVP and future multi-user boundary are explicit.\n\n## Definition of done\n\nQuân Sư can serve Mama Tổng Quản through a private local API and route approved work without owning specialist domain data."
+    },
+    {
+      "key": "CA-AI-002",
+      "title": "[ADR] Select local HTTP/JSON transport and staged deployment topology",
+      "labels": ["type:design","area:gateway","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": ["[ADR] Choose integration transport and deployment topology"],
+      "body": "## Outcome\n\nApprove local HTTP/JSON as the MVP transport from `my-discord-bot` to `chat-assistant`, with Python public-service adapters for specialist assistants and a migration path to isolated local services.\n\n## Scope\n\n- Loopback binding for native deployment and private networking for containers.\n- Process ownership, startup, health, restart, timeout, cancellation, and version negotiation.\n- Local authentication and trust boundary.\n- Windows and Linux support.\n\n## Acceptance criteria\n\n- [ ] No service requires public Internet exposure.\n- [ ] The bot reaches one stable gateway endpoint.\n- [ ] Assistant adapters can later move out of process without changing the consumer protocol.\n- [ ] Rejected alternatives and trade-offs are recorded."
+    },
+    {
+      "key": "CA-AI-003",
+      "title": "[CONTRACT] Define the versioned assistant capability protocol",
+      "labels": ["type:design","area:gateway","area:integration","priority:p0","cross-repo","status:blocked"],
+      "match_titles": ["[TASK] Define versioned assistant capability protocol"],
+      "body": "## Outcome\n\nDefine a transport-neutral protocol for generic advisor chat and all specialist operations.\n\n## Scope\n\n- Schema version, request/correlation ID, caller context, capability, operation, structured input, deadline, attachments, progress, cancellation, result, and stable error.\n- Backward compatibility, unknown fields, deprecation, and fixture ownership.\n\n## Dependencies\n\n- CA-AI-002\n\n## Acceptance criteria\n\n- [ ] Protocol models contain no Discord or database types.\n- [ ] Stable errors cover unauthorized, invalid input, unsupported capability, busy, unavailable, timeout, cancellation, incompatible version, safety refusal, and internal failure.\n- [ ] Machine-checkable fixtures exist for generic, language, game, and health capabilities.\n- [ ] Secrets and raw stack traces cannot appear in envelopes."
+    },
+    {
+      "key": "CA-AI-004",
+      "title": "[SECURITY] Define owner identity, authorization, privacy, and data ownership",
+      "labels": ["type:design","area:gateway","area:ai-ecosystem","priority:p0","cross-repo","single-user-mvp","status:blocked"],
+      "match_titles": ["[SECURITY] Define identity, authorization, privacy, and data ownership"],
+      "body": "## Outcome\n\nDefine the single-owner trust model and privacy rules across all five AI repositories.\n\n## Scope\n\n- Minimized caller context from Mama Tổng Quản.\n- Per-capability authorization and future multi-user migration.\n- Raw content logging, retention, export, deletion, temporary attachments, and audit metadata.\n- Health-specific fail-closed restrictions.\n\n## Dependencies\n\n- CA-AI-002\n- CA-AI-003\n\n## Acceptance criteria\n\n- [ ] Missing or invalid identity fails closed.\n- [ ] Admin status is not a shortcut to private learner, player, or health records.\n- [ ] Each stored datum has one owner and retention rule.\n- [ ] Raw prompts/responses are not persisted unless explicitly approved.\n- [ ] Health data receives stricter logging and retention defaults."
+    },
+    {
+      "key": "CA-AI-005",
+      "title": "[REFACTOR] Remove the legacy Discord runtime and initialize the gateway package",
+      "labels": ["type:implementation","area:gateway","priority:p0","ready-for-agent"],
+      "match_titles": ["[TASK] Initialize Python project and package layout"],
+      "body": "## Outcome\n\nReplace the legacy one-file Discord bot with a package-based local gateway service.\n\n## Scope\n\n- Remove Discord token, client, command registration, message-content intent, and Discord memory/rate-limit ownership.\n- Separate protocol, application services, HTTP adapter, generic advisor, provider adapters, specialist adapters, config, observability, and composition root.\n- Preserve useful prompt behavior only behind reviewed generic-chat contracts.\n\n## Dependencies\n\n- CA-AI-002\n\n## Acceptance criteria\n\n- [ ] No production dependency on `discord.py` remains.\n- [ ] Importing the package has no network or configuration side effects.\n- [ ] The service starts and stops cleanly with a minimal health endpoint.\n- [ ] Legacy command migration is documented for `my-discord-bot`."
+    },
+    {
+      "key": "CA-AI-006",
+      "title": "[IMPLEMENTATION] Add validated configuration, safe errors, and structured logging",
+      "labels": ["type:implementation","area:gateway","priority:p0","ready-for-agent"],
+      "match_titles": ["[TASK] Implement configuration, structured logging, and safe errors"],
+      "body": "## Outcome\n\nImplement explicit local-service configuration and privacy-safe operational diagnostics.\n\n## Scope\n\n- Bind address, port, auth secrets, model/provider settings, limits, timeouts, adapter enablement, and retention.\n- Stable error taxonomy and request correlation.\n- Redaction and content-free default logging.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-004\n- CA-AI-005\n\n## Acceptance criteria\n\n- [ ] Invalid configuration fails before serving traffic.\n- [ ] Secrets, raw prompts/responses, health content, and personal paths are excluded from normal logs.\n- [ ] Errors crossing the API are stable and stack-trace free.\n- [ ] Configuration and error behavior are covered by offline tests."
+    }
+  ]
+}

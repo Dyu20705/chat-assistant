@@ -1,0 +1,41 @@
+{
+  "repository": "Dyu20705/lang-assistant",
+  "epic_key": "LA-AI-001",
+  "issues": [
+    {
+      "key": "LA-AI-001",
+      "title": "[AI ECOSYSTEM][EPIC] Make Lang Assistant a standalone coach and gateway capability",
+      "labels": ["type:epic","area:language","area:ai-ecosystem","priority:p0","cross-repo","single-user-mvp"],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep the local CLI independently usable while exposing reviewed English and Japanese coaching services to Quân Sư.\n\n## Scope\n\n- Single learner for the MVP.\n- No Discord dependency.\n- Language data, prompts, analytics, and coaching policy remain in this repository.\n\n## Acceptance criteria\n\n- [ ] Requirements, contract, implementation, tests, QA, packaging, release, and maintenance are linked.\n- [ ] The public service is separate from CLI presentation.\n- [ ] No consumer reads private storage."
+    },
+    {
+      "key": "LA-AI-002",
+      "title": "[REQUIREMENTS] Reconcile standalone CLI and gateway language-coaching scope",
+      "labels": ["type:requirements","area:language","priority:p0","single-user-mvp","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nDefine the minimum common use cases shared by CLI and gateway without turning Discord wording into domain requirements.\n\n## Scope\n\n- Today's mission, answer correction, focused explanation/drill, mistake history update, and safe progress summary.\n- Owner identity mapping, privacy, retention, export, and delete.\n- Explicit non-goals for voice, multi-user, and cloud operation.\n\n## Acceptance criteria\n\n- [ ] Each use case has structured input, output, validation, side effects, idempotency, and error behavior.\n- [ ] CLI and gateway invoke the same application services.\n- [ ] Advanced coaching is distinct from Mama's lightweight study tracking."
+    },
+    {
+      "key": "LA-OD-001",
+      "title": "[INTEGRATION] Expose a stable language application-service contract",
+      "labels": ["type:design","area:language","area:integration","priority:p0","cross-repo","ready-for-agent"],
+      "match_titles": ["[INTEGRATION][TASK] Expose a stable application-service contract for local gateways"],
+      "body": "## Outcome\n\nPublish a versioned Discord-independent contract for trusted local gateways.\n\n## Scope\n\n- Capability discovery, readiness, today's mission, submit correction, explanation/drill, and progress summary.\n- Stable errors, deadlines, cancellation, and deterministic fixtures.\n- No ANSI or human CLI parsing in machine mode.\n\n## Acceptance criteria\n\n- [ ] Public interfaces do not expose tables or private modules.\n- [ ] At least one end-to-end operation works through a fake provider and temporary storage.\n- [ ] Contract validation does not require Ollama.\n- [ ] Backward compatibility rules are documented."
+    },
+    {
+      "key": "LA-AI-004",
+      "title": "[IMPLEMENTATION] Build shared language application services for CLI and gateway",
+      "labels": ["type:implementation","area:language","priority:p0","status:blocked"],
+      "match_titles": [],
+      "body": "## Outcome\n\nImplement framework-neutral use cases behind both presentation adapters.\n\n## Scope\n\n- Mission generation/retrieval, correction/retry, explanation/drill, mistakes, and progress.\n- Explicit transaction and idempotency boundaries.\n\n## Acceptance criteria\n\n- [ ] Services receive typed values, not Discord or CLI objects.\n- [ ] Writes happen once before delivery.\n- [ ] Cancellation and partial failure policies are tested.\n- [ ] CLI behavior remains usable."
+    },
+    {
+      "key": "LA-AI-005",
+      "title": "[IMPLEMENTATION] Add structured prompts, Ollama validation, and deterministic fallback boundaries",
+      "labels": ["type:implementation","area:language","priority:p1","ready-for-agent"],
+      "match_titles": [],
+      "body": "## Outcome\n\nMake coaching output predictable, versioned, and testable.\n\n## Scope\n\n- Versioned English/Japanese prompt contracts.\n- Structured model response parsing and validation.\n- Provider timeout/unavailable behavior and non-LLM deterministic validation.\n\n## Acceptance criteria\n\n- [ ] Invalid model output fails safely.\n- [ ] Prompts are not duplicated in the gateway or bot.\n- [ ] Model and prompt versions are observable without logging learner content.\n- [ ] Tests use fake providers by default."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "repository": "Dyu20705/health-assistant",
+  "epic_key": "HA-AI-001",
+  "issues": [
+    {
+      "key": "HA-AI-011",
+      "title": "[DEPLOY] Isolate Health Assistant data, API, secrets, and observability",
+      "labels": ["type:deploy","area:health","area:integration","priority:p0","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nDeploy locally with stricter isolation, private networking, authentication, retention, backup, and audit controls.\n\n## Scope\n\n- No public Ollama or health API.\n- Separate storage and backup boundary.\n- Secret rotation, rate limits, request limits, session isolation, health checks, trace correlation, and content-free logs.\n\n## Acceptance criteria\n\n- [ ] Health data is not mounted into Mama or Quân Sư.\n- [ ] Backup/restore and deletion are verified.\n- [ ] Operational metrics expose no raw health content.\n- [ ] Failure does not disable unrelated ecosystem capabilities."
+    },
+    {
+      "key": "HA-AI-012",
+      "title": "[RELEASE] Execute the Health Assistant safety and Discord release gate",
+      "labels": ["type:release","area:health","area:ai-ecosystem","priority:p0","cross-repo"],
+      "match_titles": [],
+      "body": "## Outcome\n\nEnable health capability only after all safety, evidence, privacy, QA, deployment, backup, and rollback evidence passes.\n\n## Scope\n\n- Exact repository SHA, source registry, rule set, prompt, model, schema, and contract versions.\n- Synthetic end-to-end ordinary, urgent, emergency, unavailable, malformed, and oversized cases.\n- Private Discord validation, restart, upgrade, rollback, export, deletion, and backup/restore.\n\n## Acceptance criteria\n\n- [ ] The release can leave health disabled without blocking generic/language/game release.\n- [ ] No public response or generic fallback occurs.\n- [ ] Rollback restores the last approved safety baseline.\n- [ ] All evidence is secret-safe."
+    },
+    {
+      "key": "HA-AI-013",
+      "title": "[MAINTENANCE] Define source, rule, prompt, model, hazard, and incident review cadence",
+      "labels": ["type:maintenance","area:health","priority:p0"],
+      "match_titles": [],
+      "body": "## Outcome\n\nMaintain health behavior as a controlled safety system rather than an ordinary chatbot feature.\n\n## Scope\n\n- Source expiry and conflict review, rule review, model/prompt evaluation, hazard updates, incident response, security patches, contract deprecation, and emergency disable switch.\n\n## Acceptance criteria\n\n- [ ] Every material change reruns affected safety tests.\n- [ ] Stale sources or failed evaluations disable affected capabilities.\n- [ ] Incidents preserve privacy and trigger rollback when needed.\n- [ ] Scope cannot widen through maintenance changes without intended-use approval."
+    }
+  ]
+}

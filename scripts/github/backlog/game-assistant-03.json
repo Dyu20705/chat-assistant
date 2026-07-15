@@ -1,0 +1,13 @@
+{
+  "repository": "Dyu20705/game-assistant",
+  "epic_key": "GA-AI-001",
+  "issues": [
+    {
+      "key": "GA-AI-011",
+      "title": "[MAINTENANCE] Define game-adapter, analysis, prompt, and schema evolution policy",
+      "labels": ["type:maintenance","area:game","priority:p1"],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep osu!mania behavior stable while preparing evidence-based future adapters.\n\n## Scope\n\n- Compatibility, migrations, prompt/model evaluations, new pattern taxonomy review, adapter admission criteria, deprecation, and rollback.\n\n## Acceptance criteria\n\n- [ ] Future games do not weaken osu!mania contracts or non-cheat rules.\n- [ ] Breaking changes include fixtures and migration tests.\n- [ ] Model/prompt updates run QA baselines.\n- [ ] Unsupported adapters remain disabled by default."
+    }
+  ]
+}

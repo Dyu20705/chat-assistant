@@ -1,0 +1,202 @@
+{
+  "repository": "Dyu20705/my-discord-bot",
+  "epic_key": "MDB-AI-001",
+  "issues": [
+    {
+      "key": "MDB-AI-001",
+      "title": "[AI ECOSYSTEM][EPIC] Integrate the personal AI ecosystem through Mama Tổng Quản",
+      "labels": [
+        "type:epic",
+        "area:ai-ecosystem",
+        "area:discord",
+        "priority:p0",
+        "cross-repo",
+        "single-user-mvp"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nMake `my-discord-bot` the only Discord gateway for generic advisor chat and the language, game, and health assistants while keeping all domain logic and data in their owning repositories.\n\n## Scope\n\n- Single-owner MVP only.\n- Local HTTP/JSON connection to `chat-assistant`.\n- No direct Ollama or assistant database access.\n- No second Discord token for the AI ecosystem.\n\n## Acceptance criteria\n\n- [ ] Every child issue is linked and ordered.\n- [ ] Discord ownership, privacy, deployment, QA, release, and maintenance are covered.\n- [ ] The epic does not absorb music responsibilities from `red-cogs`.\n\n## Definition of done\n\nThe bot can expose the approved AI capabilities in the designated guild without violating repository or data boundaries."
+    },
+    {
+      "key": "MDB-AI-002",
+      "title": "[REQUIREMENTS] Define owner-only AI command scope and user experience",
+      "labels": [
+        "type:requirements",
+        "area:discord",
+        "area:ai-ecosystem",
+        "priority:p0",
+        "single-user-mvp",
+        "ready-for-agent"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nDefine the canonical Discord experience for Quân Sư and the three specialist assistants before commands are implemented.\n\n## Scope\n\n- Owner-only authorization for the MVP.\n- Command groups, operation names, response visibility, and channel policy.\n- Boundaries between lightweight local study commands and advanced language coaching.\n- Generic advisor chat must remain distinct from health, game, and language operations.\n\n## Dependencies\n\n- Architecture baseline in `Dyu20705/chat-assistant`.\n\n## Acceptance criteria\n\n- [ ] A command-to-capability matrix exists.\n- [ ] Every command has an owner, visibility, input limit, timeout class, and fallback policy.\n- [ ] Public channels, DMs, and attachments are explicitly allowed or denied per capability.\n- [ ] Future multi-user expansion is documented but not implemented."
+    },
+    {
+      "key": "MDB-OD-001",
+      "title": "[DESIGN] Define the bot-to-gateway consumer boundary",
+      "labels": [
+        "type:design",
+        "area:integration",
+        "area:discord",
+        "priority:p0",
+        "cross-repo",
+        "single-user-mvp"
+      ],
+      "match_titles": [
+        "[INTEGRATION][DESIGN] Define my-discord-bot and ollama-assistant gateway boundary"
+      ],
+      "body": "## Outcome\n\nDefine the stable client boundary from `my-discord-bot` to `chat-assistant` without direct assistant or Ollama access.\n\n## Scope\n\n- Local HTTP/JSON transport on loopback or a private Docker network.\n- Version negotiation, authentication, caller context, deadlines, cancellation, and stable errors.\n- Discord attachment download and validation before gateway handoff.\n- Mapping structured gateway results to Discord responses.\n\n## Dependencies\n\n- `Dyu20705/chat-assistant` topology, protocol, and identity/privacy decisions.\n\n## Acceptance criteria\n\n- [ ] The bot remains the only Discord token owner.\n- [ ] Permission checks and cooldowns run before gateway calls.\n- [ ] No raw Discord objects cross the boundary.\n- [ ] The client never parses human-oriented CLI output.\n- [ ] Tests can use a deterministic fake gateway.\n\n## Definition of done\n\nA focused implementation issue can build the client without inventing transport or ownership rules."
+    },
+    {
+      "key": "MDB-AI-003",
+      "title": "[IMPLEMENTATION] Build the authenticated local gateway client",
+      "labels": [
+        "type:implementation",
+        "area:integration",
+        "area:discord",
+        "priority:p0",
+        "cross-repo",
+        "status:blocked"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nImplement a bounded asynchronous client for the approved `chat-assistant` local HTTP/JSON API.\n\n## Scope\n\n- Connection pooling, deadlines, cancellation, request IDs, and schema-version headers.\n- Local authentication with secret-safe configuration and rotation support.\n- Typed success and error models.\n- Readiness probe and circuit-breaker behavior suitable for one local service.\n\n## Dependencies\n\n- MDB-OD-001\n- Chat Assistant consumer API and protocol.\n\n## Acceptance criteria\n\n- [ ] The client never logs tokens or raw private content.\n- [ ] Timeout, busy, unavailable, invalid-response, and incompatible-version paths are tested.\n- [ ] No retry occurs for ambiguous state-changing operations.\n- [ ] Shutdown closes all sessions cleanly."
+    },
+    {
+      "key": "MDB-AI-004",
+      "title": "[FEATURE] Add owner-only Quân Sư generic advisor chat",
+      "labels": [
+        "type:implementation",
+        "area:discord",
+        "area:ai-ecosystem",
+        "priority:p1",
+        "single-user-mvp",
+        "status:blocked"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nExpose normal chatbot conversation and advisor functions through Mama Tổng Quản while delegating reasoning to the generic chat capability in `chat-assistant`.\n\n## Scope\n\n- Advisor operations for general chat, coding, research, planning, critique, and summarization.\n- Bounded context and explicit reset/history controls.\n- No implicit fallback into specialist health, language, or game capabilities.\n- Theme-aware presentation can be enabled only after the production baseline is stable.\n\n## Dependencies\n\n- MDB-AI-003\n- Generic advisor capability in `chat-assistant`.\n\n## Acceptance criteria\n\n- [ ] All commands are owner-only and guild-scoped.\n- [ ] Long requests acknowledge the interaction before Discord timeout.\n- [ ] Outputs are mention-safe, length-bounded, and paginated or file-backed when required.\n- [ ] Generic chat failure cannot crash or block non-AI bot features."
+    },
+    {
+      "key": "MDB-AI-005",
+      "title": "[INTEGRATION] Add advanced language-coaching Discord workflows",
+      "labels": [
+        "type:implementation",
+        "area:language",
+        "area:integration",
+        "area:discord",
+        "priority:p1",
+        "cross-repo",
+        "status:blocked"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nExpose advanced English and Japanese coaching through the gateway without duplicating `lang-assistant` logic.\n\n## Scope\n\n- Today's mission, answer correction, focused explanation/drill, and safe progress summary.\n- Explicit separation from existing lightweight study logging and vocabulary utilities.\n- Owner-only private responses by default.\n\n## Dependencies\n\n- MDB-AI-003\n- Lang Assistant public application-service contract.\n- Chat Assistant language adapter.\n\n## Acceptance criteria\n\n- [ ] Commands call only gateway capabilities.\n- [ ] Learner records are never read directly by the bot.\n- [ ] Submission and correction flows preserve request identity and avoid duplicate writes.\n- [ ] Unavailable language capability produces a safe, non-generic fallback message."
+    },
+    {
+      "key": "MDB-AI-006",
+      "title": "[INTEGRATION] Add evidence-based game-coaching Discord workflows",
+      "labels": [
+        "type:implementation",
+        "area:game",
+        "area:integration",
+        "area:discord",
+        "priority:p1",
+        "cross-repo",
+        "status:blocked"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nExpose rhythm-game review and training-plan workflows while preserving the coach-only and non-cheat boundary.\n\n## Scope\n\n- Safe score/session submission.\n- Optional approved attachment handoff for evidence.\n- Coach review, weakness summary, training plan, and progress summary.\n- No live gameplay assistance or game-client access.\n\n## Dependencies\n\n- MDB-AI-003\n- Game Assistant public application-service contract.\n- Chat Assistant attachment staging and game adapter.\n\n## Acceptance criteria\n\n- [ ] Discord validates type and size before staging attachments.\n- [ ] Opaque references expire and are cleaned after completion, timeout, or cancellation.\n- [ ] The bot does not parse replays or inspect game files.\n- [ ] Safety refusals are rendered without being overridden by generic chat."
+    },
+    {
+      "key": "MDB-AI-007",
+      "title": "[INTEGRATION] Add private fail-closed health support workflows",
+      "labels": [
+        "type:implementation",
+        "area:health",
+        "area:integration",
+        "area:discord",
+        "priority:p0",
+        "cross-repo",
+        "status:blocked"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nExpose only approved Health Assistant capabilities through private owner-only Discord interactions.\n\n## Scope\n\n- Private symptom intake or health check-in as approved by Health Assistant.\n- Profile, export, deletion, appointment-preparation, and reminder operations only when separately approved.\n- No diagnosis, prescribing, dose changes, or generic-chat fallback.\n- Emergency and urgent guidance must remain deterministic and visible.\n\n## Dependencies\n\n- Health Assistant safety gates and public contract.\n- Chat Assistant health adapter.\n- MDB-AI-003.\n\n## Acceptance criteria\n\n- [ ] Responses are ephemeral by default.\n- [ ] DMs, public channels, and attachments remain disabled until explicitly reviewed.\n- [ ] Health content is excluded from operational logs.\n- [ ] Gateway or Health Assistant failure returns a fail-closed message.\n- [ ] Emergency text is never truncated or hidden behind optional UI."
+    },
+    {
+      "key": "MDB-AI-008",
+      "title": "[RELIABILITY] Add AI feature flags, isolation, cooldowns, and graceful degradation",
+      "labels": [
+        "type:implementation",
+        "area:discord",
+        "area:ai-ecosystem",
+        "priority:p1",
+        "ready-for-agent"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep the main bot reliable when the gateway, Ollama, or one specialist assistant is unavailable.\n\n## Scope\n\n- Independent feature flags for generic, language, game, and health capabilities.\n- Per-user/per-capability cooldowns and concurrency limits.\n- Startup readiness reporting without making AI availability a hard dependency.\n- Safe cancellation and shutdown.\n\n## Acceptance criteria\n\n- [ ] Non-AI commands remain available during every AI dependency failure.\n- [ ] One unhealthy assistant does not disable the other capabilities.\n- [ ] Repeated failures do not create retry storms or duplicate responses.\n- [ ] Operational status reports capability readiness without exposing secrets or private content."
+    },
+    {
+      "key": "MDB-AI-009",
+      "title": "[TEST] Add gateway-client, command-adapter, and contract tests",
+      "labels": [
+        "type:test",
+        "area:discord",
+        "area:integration",
+        "priority:p1",
+        "cross-repo",
+        "ready-for-agent"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nCreate deterministic tests for the complete Discord-side AI integration without live Discord, Ollama, or assistant services.\n\n## Scope\n\n- Fake gateway client and protocol fixtures.\n- Authorization, timeout, cancellation, error mapping, message splitting, and attachment cleanup.\n- Command registration and feature-flag tests.\n- Compatibility fixtures shared with `chat-assistant`.\n\n## Acceptance criteria\n\n- [ ] Tests cover all stable gateway error codes.\n- [ ] No test uses real tokens, guild IDs, user data, or network services.\n- [ ] State-changing operations prove idempotency or explicit non-retry behavior.\n- [ ] Contract drift fails CI."
+    },
+    {
+      "key": "MDB-AI-010",
+      "title": "[QA] Validate permissions, privacy, and interaction lifecycle in the designated guild",
+      "labels": [
+        "type:qa",
+        "area:discord",
+        "area:ai-ecosystem",
+        "priority:p0",
+        "single-user-mvp"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nExecute a manual QA matrix for the exact bot release candidate and the owner-only AI surface.\n\n## Scope\n\n- Owner, admin, moderator, trusted, and member actors.\n- Allowed and denied channels.\n- Ephemeral/public behavior, defer/follow-up behavior, long output, cancellation, and attachment cleanup.\n- Generic, language, game, and health failure paths.\n\n## Acceptance criteria\n\n- [ ] Only the owner can invoke MVP AI capabilities.\n- [ ] No private content appears in public channels or logs.\n- [ ] Every command completes, cancels, or fails within its documented lifecycle.\n- [ ] Evidence is secret-safe and tied to an exact SHA."
+    },
+    {
+      "key": "MDB-AI-011",
+      "title": "[DEPLOY] Add private-network gateway configuration and operations",
+      "labels": [
+        "type:deploy",
+        "area:discord",
+        "area:integration",
+        "priority:p0",
+        "cross-repo"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nDeploy Mama Tổng Quản beside `chat-assistant` using loopback or a private Docker network with reproducible secrets and health checks.\n\n## Scope\n\n- Environment variables and secret rotation.\n- Compose/service dependency without making startup permanently block on AI readiness.\n- Resource limits, restart policy, logs, backup boundaries, and network exposure checks.\n- Windows local-development instructions and Linux production instructions.\n\n## Acceptance criteria\n\n- [ ] The gateway is never exposed publicly.\n- [ ] The Discord token remains only in `my-discord-bot`.\n- [ ] Deploy, upgrade, rollback, and incident checks are documented.\n- [ ] A broken AI service does not restart-loop the Discord bot."
+    },
+    {
+      "key": "MDB-AI-012",
+      "title": "[RELEASE] Validate the owner-only AI ecosystem through Discord",
+      "labels": [
+        "type:release",
+        "area:ai-ecosystem",
+        "area:discord",
+        "priority:p0",
+        "cross-repo"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nValidate the exact five-repository release set from Discord input through the gateway and selected assistants.\n\n## Scope\n\n- Generic advisor chat.\n- One complete language coaching flow.\n- One evidence-based game coaching flow.\n- Health integration only after all safety gates pass.\n- Restart, timeout, cancellation, backup/restore, and rollback.\n\n## Acceptance criteria\n\n- [ ] Every tested repository SHA and model/prompt version is recorded.\n- [ ] No second AI Discord bot is required.\n- [ ] Failure injection proves safe degradation.\n- [ ] Health release evidence includes safety and privacy acceptance.\n- [ ] Rollback restores the previous working bot and gateway."
+    },
+    {
+      "key": "MDB-AI-013",
+      "title": "[MAINTENANCE] Define compatibility, incident, and deprecation policy for AI commands",
+      "labels": [
+        "type:maintenance",
+        "area:ai-ecosystem",
+        "area:discord",
+        "priority:p1",
+        "cross-repo"
+      ],
+      "match_titles": [],
+      "body": "## Outcome\n\nKeep the Discord command surface stable while gateway and assistant contracts evolve.\n\n## Scope\n\n- Supported protocol-version window.\n- Feature deprecation and command migration.\n- Incident severity, rollback triggers, and dependency outage handling.\n- Future multi-user authorization migration.\n\n## Acceptance criteria\n\n- [ ] Breaking changes require compatibility fixtures and release notes.\n- [ ] Deprecated commands have an announced replacement and removal gate.\n- [ ] No assistant upgrade silently broadens permissions or data access.\n- [ ] Quarterly review checks stale feature flags, secrets, dependencies, and runbooks."
+    }
+  ]
+}
