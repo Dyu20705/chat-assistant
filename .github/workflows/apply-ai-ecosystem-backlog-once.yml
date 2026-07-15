@@ -1,0 +1,60 @@
+name: Apply AI Ecosystem Backlog Once
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-ai-ecosystem-backlog-once.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-ecosystem-backlog-sync
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    name: Create or update all managed issues
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Validate required tools and script
+        shell: bash
+        run: |
+          command -v jq
+          command -v gh
+          bash -n scripts/github/sync_ai_ecosystem_issues.sh
+
+      - name: Apply five-repository backlog
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.AI_ECOSYSTEM_PAT }}
+          TARGET_REPO: all
+          ASSIGNEE: Dyu20705
+          DRY_RUN: "false"
+          UPDATE_EXISTING: "true"
+          REOPEN_CLOSED: "false"
+        run: |
+          test -n "$GH_TOKEN" || {
+            echo "AI_ECOSYSTEM_PAT is missing." >&2
+            exit 1
+          }
+
+          gh auth status --hostname github.com
+          bash scripts/github/sync_ai_ecosystem_issues.sh \
+            | tee ai-ecosystem-backlog-result.json
+          jq . ai-ecosystem-backlog-result.json
+
+      - name: Upload audit result
+        uses: actions/upload-artifact@v6.0.0
+        with:
+          name: ai-ecosystem-backlog-result
+          path: ai-ecosystem-backlog-result.json
+          if-no-files-found: error
+          retention-days: 14
