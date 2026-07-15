@@ -81,8 +81,10 @@ The required local baseline was run on Python 3.11.9 after refreshing `main`:
 | `OLLAMA_DISCORD_SKIP_DOTENV=1 python -c "import bot; print('import ok')"` | Passed; emitted only optional Discord voice dependency warnings |
 | `ruff check .` | Passed |
 | `pytest --cov --cov-report=term-missing` | 54 passed; 76.64% branch-aware coverage; 65% threshold |
-| `pip-audit --cache-dir .pip-audit-cache --skip-editable` | Passed |
-| `actionlint .github/workflows/ci.yml` | Passed |
+| `python -m pip_audit --cache-dir .pip-audit-cache --progress-spinner off --strict .` | Passed |
+| `actionlint` | Passed for all workflow files |
+| Synchronizer syntax | Passed locally with GNU Bash |
+| Mutation-free synchronizer dry-run/count assertions | Linux CI is authoritative; native Windows `jq.exe` adds CRLF to Bash command substitutions, so the local dry-run is recorded as environmentally blocked rather than passed |
 | `git diff --check` | Passed |
 
 Local validation covers Python 3.11; GitHub Actions supplies Python 3.12 and 3.13 evidence.

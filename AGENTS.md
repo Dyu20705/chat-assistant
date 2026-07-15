@@ -35,10 +35,19 @@ OLLAMA_DISCORD_SKIP_DOTENV=1 python -m compileall -q bot.py tests
 OLLAMA_DISCORD_SKIP_DOTENV=1 python -c "import bot; print('import ok')"
 ruff check .
 pytest --cov --cov-report=term-missing
-pip-audit --cache-dir .pip-audit-cache --skip-editable
-actionlint .github/workflows/ci.yml
+python -m pip_audit --cache-dir .pip-audit-cache --progress-spinner off --strict .
+actionlint
+mkdir -p .pytest_tmp
+bash -n scripts/github/sync_ai_ecosystem_issues.sh
+DRY_RUN=true bash scripts/github/sync_ai_ecosystem_issues.sh > .pytest_tmp/ai-ecosystem-backlog.json
+test "$(jq -r '.totals.repositories' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
+test "$(jq -r '.totals.epics' .pytest_tmp/ai-ecosystem-backlog.json)" = "5"
+test "$(jq -r '.totals.child_issues' .pytest_tmp/ai-ecosystem-backlog.json)" = "70"
+test "$(jq -r '.totals.creates' .pytest_tmp/ai-ecosystem-backlog.json)" = "75"
 git diff --check
 ```
+
+The synchronizer gate requires GNU Bash and `jq`. On Windows, run that portion in WSL, a Linux container, or GitHub Actions; native Git Bash combined with Windows `jq.exe` can introduce CRLF into command substitutions. Record that as an environmental blocker instead of claiming a local pass.
 
 Do not weaken coverage, disable lint rules, skip or delete failing tests, make CI fail-open, or claim an unavailable tool passed. Add or update tests with implementation changes and record acceptance-criterion evidence in the PR.
 
