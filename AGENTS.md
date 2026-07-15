@@ -2,19 +2,19 @@
 
 ## Project purpose
 
-`Dyu20705/chat-assistant` currently contains a single-file Discord/Ollama bot. The managed roadmap proposes migrating it into Quân Sư, a transport-neutral local AI gateway for `Dyu20705/my-discord-bot`, which remains the only Discord runtime and Discord-token owner. Generic advisor chat, the Health Assistant extension, and the concrete transport remain proposals until their owning issues and human approval gates are complete.
+`Dyu20705/chat-assistant` currently contains a single-file Discord/Ollama bot. The managed roadmap proposes migrating it into Quân Sư, a transport-neutral local AI gateway for `Dyu20705/my-discord-bot`, which remains the only Discord runtime and Discord-token owner. The five-repository Health Assistant ownership boundary is accepted; runtime health enablement, generic advisor chat, and the concrete transport remain gated until their owning issues and human approvals are complete.
 
 The current `bot.py` is legacy behavior, not the target architecture. Do not treat its Discord commands, memory, attachment handling, or direct Ollama calls as the future gateway contract.
 
 ## Architecture boundaries
 
 - `my-discord-bot` owns Discord connectivity, tokens, command registration, Discord authorization, interaction acknowledgement, cooldowns, attachment download policy, and Discord presentation.
-- Under the accepted four-repository boundary, `chat-assistant` owns transport-neutral gateway orchestration, protocol envelopes, caller-context validation, capability routing, request correlation, deadlines, cancellation, back-pressure, dependency health, safe gateway errors, and public language/game assistant adapters. Issue #2 still owns the concrete transport, and generic advisor behavior requires separate approval.
-- `lang-assistant` and `game-assistant` own their domain rules, prompts, model calls, private data, persistence, migrations, validation, and public application-service contracts.
-- Issue #24 proposes adding `health-assistant` under the same domain-ownership rule. Until approved, health is not part of the accepted architecture. If enabled later, it must fail closed and retain stricter safety, privacy, evidence, QA, and release gates.
+- Under the accepted five-repository boundary, `chat-assistant` owns transport-neutral gateway orchestration, protocol envelopes, caller-context validation, capability routing, request correlation, deadlines, cancellation, back-pressure, dependency health, safe gateway errors, and public language/game/health assistant adapters. Issue #2 still owns the concrete transport, and generic advisor behavior requires separate approval.
+- `lang-assistant`, `game-assistant`, and `health-assistant` own their domain rules, prompts, model calls, private data, persistence, migrations, validation, and public application-service contracts. Health Assistant additionally owns intended use, hazards, evidence, consent, risk/emergency classification, disclaimers, and post-generation safety validation.
+- Health is part of the ownership architecture but is disabled and unauthorized by default until its stricter safety, privacy, evidence, protocol, QA, and release gates pass. Gateway and bot layers preserve structured health results without reinterpretation or generic fallback.
 - Cross-repository access must use reviewed, versioned public contracts. Never import private modules, read another repository's database or profile files, parse human-oriented CLI output, assume adjacent checkout paths, or share mutable storage.
-- Generic chat must never impersonate or silently replace a specialist capability. Any future approved health path must fail closed.
-- Architecture decisions in `docs/ecosystem-architecture.md` remain authoritative only where they have not been superseded by an accepted ADR. Keep the document aligned with the canonical five-repository roadmap before implementation relies on it.
+- Generic chat must never impersonate or silently replace a specialist capability. Health paths fail closed when disabled, unauthorized, unavailable, or incompatible.
+- Architecture decisions in `docs/ecosystem-architecture.md` remain authoritative only where they have not been superseded by an accepted ADR. Keep that document aligned with accepted cross-repository decisions before implementation relies on it.
 
 See `docs/repository-context.md` and `docs/issue-dependency-graph.md` for the dated Phase 0 audit and execution dependencies.
 
