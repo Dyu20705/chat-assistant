@@ -26,7 +26,7 @@
     {
       "key": "CA-AI-010",
       "title": "[IMPLEMENTATION] Build the local Ollama provider boundary and dependency health",
-      "labels": ["type:implementation","area:gateway","priority:p0","ready-for-agent"],
+      "labels": ["type:implementation","area:gateway","priority:p0"],
       "match_titles": ["[TASK] Implement runtime health and generic Ollama provider boundary"],
       "body": "## Outcome\n\nProvide a replaceable Ollama adapter for generic advisor chat and health/readiness reporting without coupling specialist assistants to gateway prompts.\n\n## Scope\n\n- Request/response protocol, model selection, timeout, cancellation, structured output validation, and health cache.\n- Fake provider for tests.\n\n## Acceptance criteria\n\n- [ ] The adapter is independent of Discord.\n- [ ] Health checks are bounded and do not block requests.\n- [ ] Provider errors are translated consistently.\n- [ ] Specialist prompts and algorithms are not copied into this repository."
     },

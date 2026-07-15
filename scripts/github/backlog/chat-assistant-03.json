@@ -33,7 +33,7 @@
     {
       "key": "CA-AI-017",
       "title": "[TEST] Add CI, unit-test foundation, and protocol fixtures",
-      "labels": ["type:test","area:gateway","priority:p0","ready-for-agent"],
+      "labels": ["type:test","area:gateway","priority:p0"],
       "match_titles": ["[TEST] Add CI, unit-test foundation, and contract fixtures"],
       "body": "## Outcome\n\nEstablish deterministic local quality gates for the gateway foundation and protocol models.\n\n## Scope\n\n- Format, lint, typing, unit tests, dependency review, secret scanning, protocol schema validation, and stable success/error fixtures.\n- No live Discord, Ollama, or private data in default CI.\n\n## Acceptance criteria\n\n- [ ] CI validates every supported Python version and package entry point.\n- [ ] Protocol fixtures cover generic, language, game, and health envelopes.\n- [ ] Malformed and unsupported-version payloads fail predictably.\n- [ ] Coverage and dependency policies are documented."
     },

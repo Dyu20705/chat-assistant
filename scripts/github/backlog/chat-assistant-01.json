@@ -12,7 +12,7 @@
     {
       "key": "CA-AI-002",
       "title": "[ADR] Select local HTTP/JSON transport and staged deployment topology",
-      "labels": ["type:design","area:gateway","priority:p0","cross-repo","ready-for-agent"],
+      "labels": ["type:design","area:gateway","priority:p0","cross-repo"],
       "match_titles": ["[ADR] Choose integration transport and deployment topology"],
       "body": "## Outcome\n\nApprove local HTTP/JSON as the MVP transport from `my-discord-bot` to `chat-assistant`, with Python public-service adapters for specialist assistants and a migration path to isolated local services.\n\n## Scope\n\n- Loopback binding for native deployment and private networking for containers.\n- Process ownership, startup, health, restart, timeout, cancellation, and version negotiation.\n- Local authentication and trust boundary.\n- Windows and Linux support.\n\n## Acceptance criteria\n\n- [ ] No service requires public Internet exposure.\n- [ ] The bot reaches one stable gateway endpoint.\n- [ ] Assistant adapters can later move out of process without changing the consumer protocol.\n- [ ] Rejected alternatives and trade-offs are recorded."
     },
@@ -33,14 +33,14 @@
     {
       "key": "CA-AI-005",
       "title": "[REFACTOR] Remove the legacy Discord runtime and initialize the gateway package",
-      "labels": ["type:implementation","area:gateway","priority:p0","ready-for-agent"],
+      "labels": ["type:implementation","area:gateway","priority:p0"],
       "match_titles": ["[TASK] Initialize Python project and package layout"],
       "body": "## Outcome\n\nReplace the legacy one-file Discord bot with a package-based local gateway service.\n\n## Scope\n\n- Remove Discord token, client, command registration, message-content intent, and Discord memory/rate-limit ownership.\n- Separate protocol, application services, HTTP adapter, generic advisor, provider adapters, specialist adapters, config, observability, and composition root.\n- Preserve useful prompt behavior only behind reviewed generic-chat contracts.\n\n## Dependencies\n\n- CA-AI-002\n\n## Acceptance criteria\n\n- [ ] No production dependency on `discord.py` remains.\n- [ ] Importing the package has no network or configuration side effects.\n- [ ] The service starts and stops cleanly with a minimal health endpoint.\n- [ ] Legacy command migration is documented for `my-discord-bot`."
     },
     {
       "key": "CA-AI-006",
       "title": "[IMPLEMENTATION] Add validated configuration, safe errors, and structured logging",
-      "labels": ["type:implementation","area:gateway","priority:p0","ready-for-agent"],
+      "labels": ["type:implementation","area:gateway","priority:p0"],
       "match_titles": ["[TASK] Implement configuration, structured logging, and safe errors"],
       "body": "## Outcome\n\nImplement explicit local-service configuration and privacy-safe operational diagnostics.\n\n## Scope\n\n- Bind address, port, auth secrets, model/provider settings, limits, timeouts, adapter enablement, and retention.\n- Stable error taxonomy and request correlation.\n- Redaction and content-free default logging.\n\n## Dependencies\n\n- CA-AI-003\n- CA-AI-004\n- CA-AI-005\n\n## Acceptance criteria\n\n- [ ] Invalid configuration fails before serving traffic.\n- [ ] Secrets, raw prompts/responses, health content, and personal paths are excluded from normal logs.\n- [ ] Errors crossing the API are stable and stack-trace free.\n- [ ] Configuration and error behavior are covered by offline tests."
     }
