@@ -1,0 +1,103 @@
+name: Sync AI Ecosystem Issues
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Dry-run chỉ kiểm tra; apply sẽ tạo/update GitHub Issues"
+        required: true
+        default: dry-run
+        type: choice
+        options:
+          - dry-run
+          - apply
+
+      target_repo:
+        description: "all hoặc OWNER/REPO"
+        required: true
+        default: all
+        type: string
+
+      confirmation:
+        description: "Khi apply, nhập chính xác CREATE_AI_BACKLOG"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-ecosystem-backlog-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync managed backlog
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Check required tools
+        shell: bash
+        run: |
+          command -v bash
+          command -v jq
+          command -v gh
+          bash --version
+          jq --version
+          gh --version
+
+      - name: Validate synchronizer syntax
+        shell: bash
+        run: |
+          bash -n scripts/github/sync_ai_ecosystem_issues.sh
+
+      - name: Run mutation-free dry-run
+        if: inputs.mode == 'dry-run'
+        shell: bash
+        env:
+          TARGET_REPO: ${{ inputs.target_repo }}
+          DRY_RUN: "true"
+        run: |
+          bash scripts/github/sync_ai_ecosystem_issues.sh \
+            | tee ai-ecosystem-backlog-result.json
+
+          jq . ai-ecosystem-backlog-result.json
+
+      - name: Guard issue mutation
+        if: inputs.mode == 'apply'
+        shell: bash
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if [[ "$CONFIRMATION" != "CREATE_AI_BACKLOG" ]]; then
+            echo "Refusing mutation: confirmation is incorrect." >&2
+            exit 1
+          fi
+
+      - name: Create or update managed issues
+        if: inputs.mode == 'apply'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.AI_ECOSYSTEM_PAT }}
+          TARGET_REPO: ${{ inputs.target_repo }}
+          ASSIGNEE: Dyu20705
+          DRY_RUN: "false"
+          UPDATE_EXISTING: "true"
+          REOPEN_CLOSED: "false"
+        run: |
+          test -n "$GH_TOKEN" || {
+            echo "AI_ECOSYSTEM_PAT is missing." >&2
+            exit 1
+          }
+
+          gh auth status --hostname github.com
+
+          bash scripts/github/sync_ai_ecosystem_issues.sh \
+            | tee ai-ecosystem-backlog-result.json
+
+          jq . ai-ecosystem-backlog-result.json
