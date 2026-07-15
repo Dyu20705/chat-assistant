@@ -2,58 +2,83 @@
 
 Snapshot date: 2026-07-15
 
-Scope: all 26 open issues in `Dyu20705/chat-assistant`, plus direct cross-repository blockers. The checked-in backlog manifests, current issue bodies, all open-issue comments, related producer/consumer issues, source tree, and recent merged PRs were reconciled. A dependency marked **inferred** is required by current architecture or acceptance criteria but is missing from the managed issue block and should be added during refinement.
+Scope: all 27 open issues in `Dyu20705/chat-assistant`, plus the direct producer and Discord-consumer issues that gate their acceptance evidence. The snapshot reconciles the checked-in backlog manifests, live issue labels and refinement comments, current source and CI, merged governance PR #35, and architecture PR #36 at exact head `235e95ba21c6ae8f4e12afc16ca45ab7a291f47d`.
+
+Historical `ollama-discord` and `ollama-assistant` URLs resolve to this repository and are rename aliases, not separate systems. Canonical references use `Dyu20705/chat-assistant`.
+
+External `ready-for-agent` labels below are reported verbatim. They do not override the dependency and acceptance blockers recorded in this graph.
+
+## Current gate
+
+- Governance and the Phase 0 context baseline are merged on `main` through PR #35.
+- [#37](https://github.com/Dyu20705/chat-assistant/issues/37) is the only local issue labeled `ready-for-agent`; it reconciles this document and changes no architecture or runtime behavior.
+- [#24](https://github.com/Dyu20705/chat-assistant/issues/24) is implemented in [PR #36](https://github.com/Dyu20705/chat-assistant/pull/36). Required CI, two independent review axes, and GitHub Codex review are clean at the exact head, with no review threads.
+- PR #36 remains draft and #24 remains `status:blocked`. Moving it to ready or merging it requires explicit human approval because it changes cross-repository architecture and health privacy/safety boundaries.
+- After #37, the next decision is human approval of #24. After #24 is approved and merged, the next production design issue is #2. No production implementation issue is currently unblocked.
 
 ## Execution graph
 
 | Issue | Type | Depends on | Blocked by current evidence | Responsible repository | Risk | Proposed order/state |
 | --- | --- | --- | --- | --- | --- | --- |
-| [#24](https://github.com/Dyu20705/chat-assistant/issues/24) Add Health Assistant to architecture | Architecture | Closed #1 ownership baseline | None for documentation; merge requires human architecture approval | `chat-assistant`, coordinated with all five repos | Critical | 1 — first product issue after governance bootstrap |
-| [#2](https://github.com/Dyu20705/chat-assistant/issues/2) Select transport/topology | Architecture/ADR | #24 **inferred** | Five-repo architecture drift; topology unresolved; human approval | `chat-assistant` | Critical | 2 — refine, propose, wait for approval |
-| [#3](https://github.com/Dyu20705/chat-assistant/issues/3) Versioned capability protocol | Public contract | #2, #24 **inferred** | #2 open; human public-schema approval | `chat-assistant`, fixtures consumed by all five repos | Critical | 3 |
-| [#4](https://github.com/Dyu20705/chat-assistant/issues/4) Identity/privacy/data ownership | Security/contract | #2, #3, #24 **inferred** | #2 and #3 open; human security/privacy approval | All five repos; policy recorded in `chat-assistant` | Critical | 4 |
-| [#5](https://github.com/Dyu20705/chat-assistant/issues/5) Remove Discord runtime and initialize gateway package | Refactor/implementation | #2, #24 **inferred** | #2 open; project foundation is only partially present | `chat-assistant` | High | 5 |
-| [#10](https://github.com/Dyu20705/chat-assistant/issues/10) CI, test foundation, protocol fixtures | Test | #3, #5 | Protocol/package entry point absent; current CI is partial acceptance evidence | `chat-assistant` | High | 6 — refine remaining scope before code |
-| [#6](https://github.com/Dyu20705/chat-assistant/issues/6) Configuration, errors, structured logging | Implementation/security | #3, #4, #5 | All dependencies open | `chat-assistant` | Critical | 7 |
-| [#7](https://github.com/Dyu20705/chat-assistant/issues/7) Capability registry/router | Implementation | #3, #5, #6 | All dependencies open | `chat-assistant` | Critical | 8 |
-| [#8](https://github.com/Dyu20705/chat-assistant/issues/8) Job lifecycle/back-pressure | Implementation/reliability | #3, #4, #6, #7 | All dependencies open | `chat-assistant` | Critical | 9 |
-| [#9](https://github.com/Dyu20705/chat-assistant/issues/9) Ollama provider/dependency health | Implementation/provider | #2, #3, #5, #6 from original issue | Dependencies open; legacy direct client is the wrong boundary | `chat-assistant` | High | 10 |
-| [#29](https://github.com/Dyu20705/chat-assistant/issues/29) Generic advisor chat | Implementation | #4, #7, #8, #9 **inferred** | Gateway core and provider absent | `chat-assistant` | High | 11 |
-| [#13](https://github.com/Dyu20705/chat-assistant/issues/13) Stable Mama consumer API | Integration/public API | #2, #3, #4, #7; `my-discord-bot` #56 | Local dependencies open; bot issue #56 is itself waiting on #2-#4 | `chat-assistant` + `my-discord-bot` | Critical | 12 — co-design after #2-#4, then implement here |
-| [#16](https://github.com/Dyu20705/chat-assistant/issues/16) Structured results/delivery metadata | Implementation/contract | #3, #13 | Dependencies open | `chat-assistant`; rendered by `my-discord-bot` | High | 13 |
-| [#15](https://github.com/Dyu20705/chat-assistant/issues/15) Safe content/attachment staging | Security/implementation | #3, #4, #8, #13 | Dependencies open; human security/privacy approval before merge | `chat-assistant` + bot handoff contract | Critical | 14 |
-| [#17](https://github.com/Dyu20705/chat-assistant/issues/17) Health/metrics/tracing/audit | Observability | #4, #6, #8, #13 from original issue | Orphaned from managed epic; overlaps #6/#9/#20 but metrics/tracing remain uncovered | `chat-assistant` | High | Refine now; implement after #13 |
-| [#11](https://github.com/Dyu20705/chat-assistant/issues/11) Lang adapter | Integration | #3, #7, #8; `lang-assistant` #62 | Producer contract #62 is open | `chat-assistant` consumer; `lang-assistant` producer | High | 15a — blocked externally |
-| [#12](https://github.com/Dyu20705/chat-assistant/issues/12) Game adapter | Integration | #3, #7, #8; `game-assistant` #46 | Producer contract #46 is open | `chat-assistant` consumer; `game-assistant` producer | High | 15b — blocked externally |
-| [#30](https://github.com/Dyu20705/chat-assistant/issues/30) Health adapter | Integration/safety | #3, #7, #8; `health-assistant` #21 | Health contract #21 is blocked by intended-use, hazard, privacy, and evidence decisions | `chat-assistant` consumer; `health-assistant` producer | Critical | 15c — blocked externally; human safety gate |
-| [#14](https://github.com/Dyu20705/chat-assistant/issues/14) Cross-repo compatibility tests | Integration test | #3, #11, #12, #13, #30; all producer contracts | Adapters and public fixtures absent | `chat-assistant`, with all producer/consumer repos | Critical | 16 |
-| [#20](https://github.com/Dyu20705/chat-assistant/issues/20) Reproducible deployment/operations | Deployment | #2, #5, #6, #8, #9, #13, #17 **partly inferred** | Service/package/API absent; human deployment approval | `chat-assistant`, coordinated with deployed repos | Critical | 17 |
-| [#31](https://github.com/Dyu20705/chat-assistant/issues/31) Load/failure/privacy/safety evaluation | QA | #8-#17, #20, #29, #30 **inferred by scope** | Managed body declares no dependencies despite release-candidate scope | `chat-assistant` with synthetic cross-repo fixtures | Critical | 18 — refine before scheduling |
-| [#18](https://github.com/Dyu20705/chat-assistant/issues/18) Generic/language end-to-end demo | QA/demo | #11, #13, #16, #29 **inferred**; `my-discord-bot` #56 and downstream client/workflow | Gateway, bot client, generic capability, and language contract absent | `chat-assistant`, `my-discord-bot`, `lang-assistant` | High | 19a — cross-repo blocked |
-| [#19](https://github.com/Dyu20705/chat-assistant/issues/19) Game end-to-end demo | QA/demo | #12, #13, #15, #16; `my-discord-bot` #56 and downstream client/workflow | Gateway, bot client, game contract, and attachment path absent | `chat-assistant`, `my-discord-bot`, `game-assistant` | High | 19b — cross-repo blocked |
-| [#32](https://github.com/Dyu20705/chat-assistant/issues/32) Upgrade/incident/deprecation policy | Maintenance | #3, #4 and accepted adapter/API compatibility windows **inferred** | Contract and operational behavior undecided | `chat-assistant`, coordinated with all consumers/producers | High | 20 |
-| [#21](https://github.com/Dyu20705/chat-assistant/issues/21) Five-repo release gate | Release | #14, #18, #19, #20, #31, #32 **partly inferred**; corresponding external release gates | All release evidence absent; health may remain disabled; human approval mandatory | All five repositories | Critical | 21 — final gate only |
-| [#33](https://github.com/Dyu20705/chat-assistant/issues/33) Quân Sư epic | Epic/coordination | Every managed child issue and related repository epic | Entire roadmap; checklist omits open #17 and #24 | `chat-assistant`, coordinated across five repos | Critical | Coordination only; close last |
+| [#37](https://github.com/Dyu20705/chat-assistant/issues/37) Reconcile the Phase 0 graph | Maintenance/docs | None | None; documentation-only reconciliation | `chat-assistant` | Low | Current independent issue |
+| [#24](https://github.com/Dyu20705/chat-assistant/issues/24) Add Health Assistant to architecture | Architecture/privacy | Closed #1 ownership baseline | PR #36 is automated-review clean but still requires explicit human approval before ready/merge | `chat-assistant`, coordinated with all five repos | Critical | First architecture gate; blocked |
+| [#2](https://github.com/Dyu20705/chat-assistant/issues/2) Select transport/topology | Architecture/ADR | #24 approved and merged | #24 is not approved or merged; human architecture/security approval will also be required here | `chat-assistant` | Critical | Next after #24 |
+| [#3](https://github.com/Dyu20705/chat-assistant/issues/3) Versioned capability protocol | Public contract | #2, #24 | Topology and five-repo boundary are unapproved; human protocol/security/privacy approval required | `chat-assistant`; fixtures consumed by all five repos | Critical | After #2 |
+| [#4](https://github.com/Dyu20705/chat-assistant/issues/4) Identity/privacy/data ownership | Security/contract | #2, #3, #24 | Architecture and protocol are open; human security/privacy approval required | All five repos; policy recorded in `chat-assistant` | Critical | After #3 |
+| [#5](https://github.com/Dyu20705/chat-assistant/issues/5) Remove Discord runtime and initialize gateway package | Refactor/implementation | #2, #24 | Approved topology is absent; current `pyproject.toml`, `bot.py`, tests, and CI are legacy/partial migration inputs | `chat-assistant` | High | First package implementation |
+| [#10](https://github.com/Dyu20705/chat-assistant/issues/10) Extend CI and add protocol fixtures | Test | #3, #5 | Protocol and target package entry points are absent; existing Python matrix/Ruff/pytest/audit checks are partial evidence to preserve | `chat-assistant` | High | With/after #5 and #3 |
+| [#6](https://github.com/Dyu20705/chat-assistant/issues/6) Configuration, errors, structured logging | Implementation/security | #3, #4, #5 | All dependencies are open; contradictory `ready-for-agent` label was removed | `chat-assistant` | Critical | After #3-#5 |
+| [#7](https://github.com/Dyu20705/chat-assistant/issues/7) Capability registry/router | Implementation | #3, #5, #6 | All dependencies are open | `chat-assistant` | Critical | After #6 |
+| [#8](https://github.com/Dyu20705/chat-assistant/issues/8) Job lifecycle/back-pressure | Implementation/reliability | #3, #4, #6, #7 | All dependencies are open | `chat-assistant` | Critical | After #7 |
+| [#9](https://github.com/Dyu20705/chat-assistant/issues/9) Ollama provider/dependency health | Implementation/provider | #2, #3, #5, #6 | Dependencies are open; legacy direct Discord-to-Ollama code is discovery evidence, not the target provider boundary | `chat-assistant` | High | After #6 |
+| [#29](https://github.com/Dyu20705/chat-assistant/issues/29) Generic advisor chat | Implementation/privacy | #3, #4, #7, #8, #9 | Gateway core/provider absent; privacy-sensitive memory and health fail-closed behavior require human approval | `chat-assistant` | High | After #8 and #9 |
+| [#13](https://github.com/Dyu20705/chat-assistant/issues/13) Stable Mama consumer API | Integration/public API | #2, #3, #4, #6, #7, #8, #9; `my-discord-bot` #56 | Local behavior is absent; #56 waits on #2-#4 but does not wait on #13 implementation | `chat-assistant` server + `my-discord-bot` consumer | Critical | Finalize #56 after #2-#4, then co-design #13/#103 fixtures |
+| [#16](https://github.com/Dyu20705/chat-assistant/issues/16) Structured results/delivery metadata | Implementation/contract | #3, #13 | Dependencies are open | `chat-assistant`; rendered by `my-discord-bot` | High | After #13 |
+| [#15](https://github.com/Dyu20705/chat-assistant/issues/15) Safe content/attachment staging | Security/implementation | #3, #4, #8, #13 | Dependencies are open; human security/privacy approval required before merge | `chat-assistant` + bot handoff contract | Critical | After #13 |
+| [#17](https://github.com/Dyu20705/chat-assistant/issues/17) Metrics, tracing, and audit events | Observability | #4, #6, #8, #9, #13 | Dependencies are open; scope now excludes logging (#6), health semantics (#9), API exposure (#13), and deployment retention/rotation (#20) | `chat-assistant` | High | After #13 |
+| [#11](https://github.com/Dyu20705/chat-assistant/issues/11) Lang adapter | Integration | #3, #7, #8; `lang-assistant` #62 | Producer contract #62 is open | `chat-assistant` consumer; `lang-assistant` producer | High | Parallel adapter lane after core |
+| [#12](https://github.com/Dyu20705/chat-assistant/issues/12) Game adapter | Integration | #3, #7, #8; `game-assistant` #46 | Producer contract #46 is open | `chat-assistant` consumer; `game-assistant` producer | High | Parallel adapter lane after core |
+| [#30](https://github.com/Dyu20705/chat-assistant/issues/30) Health adapter | Integration/safety | #3, #7, #8; `health-assistant` #21 and its safety/privacy/evidence gates | Health contract and upstream safety gates are blocked; human safety/privacy approval required | `chat-assistant` consumer; `health-assistant` producer | Critical | Optional gated lane; never blocks unrelated capabilities |
+| [#14](https://github.com/Dyu20705/chat-assistant/issues/14) Cross-repo compatibility tests | Integration test | #3, #10, #11, #12, #13, #30 when health is enabled; all corresponding producer contracts | Adapters and public fixtures are absent | `chat-assistant` with all enabled producers/consumers | Critical | After adapter/API fixtures |
+| [#20](https://github.com/Dyu20705/chat-assistant/issues/20) Reproducible deployment/operations | Deployment | #2, #4, #5, #6, #8, #9, #13, #17; `my-discord-bot` #111; released assistant packages/endpoints | Service/package/API absent; human deployment/secret-handling approval required | `chat-assistant`, coordinated with deployed repos | Critical | After operational behavior exists |
+| [#31](https://github.com/Dyu20705/chat-assistant/issues/31) Load/failure/privacy/safety evaluation | QA | #8-#17, #20, #29; #30 only when health is proposed for enablement | Exact release candidate and resource/deployment limits do not exist; privacy/safety evidence needs human review | `chat-assistant` with synthetic cross-repo fixtures | Critical | Release-candidate QA |
+| [#18](https://github.com/Dyu20705/chat-assistant/issues/18) Generic/language end-to-end demo | QA/demo | #6, #10, #11, #13, #16, #17, #29; `my-discord-bot` #56/#103/#104/#105/#109; `lang-assistant` #62 | Gateway, bot client/features, and compatible language candidate are absent | `chat-assistant`, `my-discord-bot`, `lang-assistant` | High | Cross-repo evidence lane |
+| [#19](https://github.com/Dyu20705/chat-assistant/issues/19) Game end-to-end demo | QA/demo | #10, #12, #13, #15, #16; `my-discord-bot` #56/#103/#106/#109; `game-assistant` #46 | Gateway, bot client/feature, game contract, and attachment path are absent | `chat-assistant`, `my-discord-bot`, `game-assistant` | High | Cross-repo evidence lane |
+| [#32](https://github.com/Dyu20705/chat-assistant/issues/32) Upgrade/incident/deprecation policy | Maintenance/public guarantees | #3, #4, #6, #8, #14, #15, #17, #20 | Contract windows and operational behavior are unaccepted; final policy requires human approval | `chat-assistant`, coordinated with all consumers/producers | High | Before final release |
+| [#21](https://github.com/Dyu20705/chat-assistant/issues/21) Five-repo release gate | Release | #14, #18, #19, #20, #31, #32; `my-discord-bot` #112; compatible producer release evidence | All release evidence is absent; health must be independently approved or proven disabled/fail-closed; human release approval mandatory | All five repositories | Critical | Final gate only; never agent-closed |
+| [#33](https://github.com/Dyu20705/chat-assistant/issues/33) Quân Sư epic | Epic/coordination | Every managed child, #17, #24, #37, and related repository epics | Entire roadmap; generated checklist omits manually coordinated #17/#24 | `chat-assistant`, coordinated across five repos | Critical | Coordination-only; close last |
 
-## Direct external blockers
+## Direct cross-repository edges
 
-| Boundary | Producer/consumer issue | State | Consequence |
+| Boundary | Producer/consumer issue | Live state | Consequence |
 | --- | --- | --- | --- |
-| Discord consumer design | [`my-discord-bot#56`](https://github.com/Dyu20705/my-discord-bot/issues/56) | Open; blocked on chat-assistant #2-#4 | #13 must be co-designed after the gateway decisions; issue text contains stale rename aliases |
-| Language producer contract | [`lang-assistant#62`](https://github.com/Dyu20705/lang-assistant/issues/62) | Open, ready for agent | #11 cannot implement against private modules or storage |
-| Game producer contract | [`game-assistant#46`](https://github.com/Dyu20705/game-assistant/issues/46) | Open, ready for agent | #12 cannot implement against private parsers, modules, or storage |
-| Health producer contract | [`health-assistant#21`](https://github.com/Dyu20705/health-assistant/issues/21) | Open, blocked | #30 remains blocked until intended-use, hazard, privacy, and evidence decisions are approved |
-| Health ecosystem integration | [`health-assistant#18`](https://github.com/Dyu20705/health-assistant/issues/18) | Open, blocked on chat-assistant #2-#4 | Cross-repo implementation must not begin before upstream architecture gates |
+| Discord command requirements | [`my-discord-bot#102`](https://github.com/Dyu20705/my-discord-bot/issues/102) | Open; `ready-for-agent`; depends on accepted architecture baseline | Can refine Discord UX independently, but cannot establish an unapproved gateway/health boundary |
+| Discord consumer design | [`my-discord-bot#56`](https://github.com/Dyu20705/my-discord-bot/issues/56) | Open; `status:blocked` on #24 and chat #2-#4 | Finalizes Discord-owned semantics before #13/#103 implementation; stale aliases in its body are historical |
+| Authenticated gateway client | [`my-discord-bot#103`](https://github.com/Dyu20705/my-discord-bot/issues/103) | Open; `status:blocked` | Implements the client after #56 against chat #3/#13 schemas and fixtures |
+| Generic Discord workflow | [`my-discord-bot#104`](https://github.com/Dyu20705/my-discord-bot/issues/104) | Open; `status:blocked` | Gates the generic portion of #18; depends on #103 and chat #29 |
+| Language Discord workflow | [`my-discord-bot#105`](https://github.com/Dyu20705/my-discord-bot/issues/105) | Open; `status:blocked` | Gates the language portion of #18; depends on #103, chat #11, and the language contract |
+| Game Discord workflow | [`my-discord-bot#106`](https://github.com/Dyu20705/my-discord-bot/issues/106) | Open; `status:blocked` | Gates #19; depends on #103, chat #12/#15, and the game contract |
+| Discord contract tests | [`my-discord-bot#109`](https://github.com/Dyu20705/my-discord-bot/issues/109) | Open; `ready-for-agent` | Fake/test foundations may progress, but complete compatibility evidence waits on chat #3/#10/#13 and #103 |
+| Discord deployment | [`my-discord-bot#111`](https://github.com/Dyu20705/my-discord-bot/issues/111) | Open | Must coordinate private-network, secrets, readiness, and rollback evidence with chat #20 |
+| Discord release | [`my-discord-bot#112`](https://github.com/Dyu20705/my-discord-bot/issues/112) | Open | Supplies the designated-guild and rollback evidence consumed by chat #21 |
+| Language producer contract | [`lang-assistant#62`](https://github.com/Dyu20705/lang-assistant/issues/62) | Open; `ready-for-agent` | #11 cannot implement against private modules or storage |
+| Game producer contract | [`game-assistant#46`](https://github.com/Dyu20705/game-assistant/issues/46) | Open; `ready-for-agent` | #12 cannot implement against private parsers, modules, or storage |
+| Health producer contract | [`health-assistant#21`](https://github.com/Dyu20705/health-assistant/issues/21) | Open; `status:blocked` | #30 remains blocked until intended-use, hazard, evidence, and privacy decisions are approved |
+| Health ecosystem integration | [`health-assistant#18`](https://github.com/Dyu20705/health-assistant/issues/18) | Open; `status:blocked` on chat #2-#4 and bot #56 | Cross-repo health implementation cannot begin before all upstream gates; failures never fall back to generic chat |
 
 ## Dependency shape
 
 ```mermaid
 flowchart TD
-    Governance["Governance bootstrap"] --> HealthArch["#24 Five-repository architecture"]
-    HealthArch --> Topology["#2 Topology ADR"]
+    Governance["Governance PR #35"] --> Graph["#37 Graph reconciliation"]
+    Governance --> HealthArch["#24 Five-repository architecture"]
+    HealthArch --> HumanApproval["Human approval and merge"]
+    HumanApproval -.-> Topology["#2 Topology ADR"]
     Topology --> Protocol["#3 Capability protocol"]
     Topology --> Package["#5 Gateway package migration"]
     Protocol --> Privacy["#4 Identity and privacy"]
+    Protocol --> TestBase["#10 CI and protocol fixtures"]
+    Package --> TestBase
     Protocol --> Config["#6 Config, errors, logging"]
     Package --> Config
     Privacy --> Config
@@ -62,31 +87,62 @@ flowchart TD
     Config --> Provider["#9 Ollama provider"]
     Jobs --> Generic["#29 Generic advisor"]
     Provider --> Generic
-    Router --> Api["#13 Consumer API"]
+    ConsumerDesign["my-discord-bot #56"] --> Api["#13 Consumer API"]
     Privacy --> Api
+    Config --> Api
+    Router --> Api
+    Jobs --> Api
+    Provider --> Api
+    Api --> Client["my-discord-bot #103"]
     Api --> Results["#16 Structured results"]
     Jobs --> Attachments["#15 Attachments"]
     Api --> Attachments
+    Privacy --> Observability["#17 Metrics, traces, audit"]
+    Config --> Observability
+    Jobs --> Observability
+    Provider --> Observability
+    Api --> Observability
     Jobs --> Adapters["#11/#12/#30 Specialist adapters"]
     External["External public contracts"] --> Adapters
-    Adapters --> Compat["#14 Compatibility tests"]
+    TestBase --> Compat["#14 Compatibility tests"]
+    Adapters --> Compat
+    Client --> DiscordFeatures["my-discord-bot #104-#106"]
+    Generic --> DiscordFeatures
+    Adapters --> DiscordFeatures
     Results --> Demos["#18/#19 E2E demos"]
-    Generic --> Demos
+    DiscordFeatures --> Demos
     Attachments --> Demos
+    Observability --> Demos
+    Api --> Deploy["#20 Deployment"]
+    Observability --> Deploy
+    Compat --> QA["#31 QA and failure injection"]
+    Deploy --> QA
+    Generic --> QA
+    Compat --> Maintenance["#32 Maintenance policy"]
+    Deploy --> Maintenance
     Compat --> Release["#21 Release gate"]
     Demos --> Release
-    Deploy["#20 Deployment"] --> Release
-    QA["#31 QA and failure injection"] --> Release
-    Maintenance["#32 Maintenance policy"] --> Release
+    QA --> Release
+    Deploy --> Release
+    Maintenance --> Release
 ```
 
-## Refinement required before implementation
+## Completed Phase 0 refinements
 
-1. Reconcile #24 and #2 with the canonical five-repository architecture and choose one specialist adapter topology using only committed or publicly linked review evidence.
-2. Add #17 and #24 to the managed roadmap or explicitly close them with evidence. Issue #17 should retain only observability work not already owned by #6, #9, or #20.
-3. Update #5, #9, and #10 to distinguish existing legacy/partial foundations from target gateway acceptance criteria.
-4. Add missing dependency edges to #18-#21, #29, #31, and #32; normalize contradictory blocked/ready labels.
-5. Break the apparent #13 / `my-discord-bot#56` coordination cycle: #2-#4 decide shared boundaries, then #56 finalizes the consumer design, then #13 implements the server contract.
-6. Treat the health path as optional for the first generic/language/game release unless the separate human safety gate approves enabling it.
+1. #24 now has an exact-head architecture proposal, complete CI/review evidence, a blocking label, and a documented human approval gate.
+2. #2-#4 now use the five-repository boundary and explicitly require human architecture, protocol, security, and privacy approval.
+3. #5, #9, and #10 distinguish existing legacy/partial foundations from the target package, provider, and CI/fixture acceptance evidence.
+4. #17 retains only metric instruments/cardinality, tracing, and audit events; logging, health semantics, API exposure, and deployment retention/rotation remain owned by #6, #9, #13, and #20 respectively.
+5. Missing edges and acceptance evidence were added to #18-#21, #29, #31, and #32. #31/#32 were labeled blocked.
+6. The consumer sequence is acyclic: chat #2-#4 decide shared boundaries, `my-discord-bot#56` finalizes Discord semantics, then chat #13 and `my-discord-bot#103` implement server/client against shared fixtures.
+7. Contradictory local blocked/ready labels were removed from #2, #5, #6, #9, and #10. At this snapshot, only independent documentation issue #37 is locally ready.
+8. #33 has a coordination supplement for manually managed #17/#24. Health remains optional for the first generic/language/game release and must be either independently approved or demonstrably disabled and fail-closed.
 
-Until those refinements are applied, the next production issue is #24, not a feature implementation issue.
+## Remaining gates
+
+1. Merge the documentation-only #37 PR after its own CI and independent review.
+2. Obtain explicit human approval to move PR #36 to ready and merge the five-repository architecture proposal.
+3. Design, review, and obtain human approval for #2, then #3, then #4.
+4. Start package/runtime work only after its dependency row is satisfied; preserve the existing CI baseline while migrating away from `bot.py`.
+5. Keep health disabled and deny health fallback until its separate intended-use, hazard, evidence, privacy, contract, QA, and release gates pass.
+6. Execute #21 only with exact release evidence and explicit human approval; close #33 last.
