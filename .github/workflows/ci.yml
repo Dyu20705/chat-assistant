@@ -66,11 +66,6 @@ jobs:
         shell: bash
         run: pytest --cov --cov-report=term-missing
 
-      - name: Dependency vulnerability audit
-        if: matrix.python-version == '3.11'
-        shell: bash
-        run: pip-audit --cache-dir .pip-audit-cache --skip-editable
-
       - name: Set up Go for actionlint
         if: matrix.python-version == '3.11'
         uses: actions/setup-go@v6.5.0
@@ -100,6 +95,16 @@ jobs:
           test "$(jq -r '.totals.child_issues' .pytest_tmp/ai-ecosystem-backlog.json)" = "70"
           test "$(jq -r '.totals.creates' .pytest_tmp/ai-ecosystem-backlog.json)" = "75"
 
+      - name: Audit runtime project dependencies
+        if: matrix.python-version == '3.11'
+        shell: bash
+        run: |
+          python -m pip_audit \
+            --cache-dir .pip-audit-cache \
+            --progress-spinner off \
+            --strict \
+            .
+
       - name: Write CI summary
         if: matrix.python-version == '3.11'
         shell: bash
@@ -110,7 +115,7 @@ jobs:
             echo "- Python versions: 3.11, 3.12, 3.13"
             echo "- Ruff lint: passed"
             echo "- Pytest coverage threshold: 65%"
-            echo "- Dependency audit: passed"
             echo "- Workflow validation: passed"
             echo "- AI ecosystem backlog dry-run: 5 repositories, 75 managed issues"
+            echo "- Runtime project dependency audit: passed"
           } >> "$GITHUB_STEP_SUMMARY"
