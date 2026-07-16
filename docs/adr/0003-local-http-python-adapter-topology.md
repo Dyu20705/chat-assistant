@@ -293,7 +293,8 @@ Each repository should implement only its side of the reviewed, versioned
 public contract and may temporarily duplicate small protocol fixtures where
 that keeps ownership explicit. A shared package can be reconsidered only after
 real common behavior is demonstrated and separately reviewed; foundation work
-must not assume that extraction or this ADR's deployment topology.
+must not assume that shared-package extraction is required by, or forms part
+of, this ADR's deployment topology.
 
 ### Direct storage, private imports, public/cloud transport, or another bot
 
