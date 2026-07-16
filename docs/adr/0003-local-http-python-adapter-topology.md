@@ -285,6 +285,16 @@ Rejected. Each is useful on its native platform, but selecting both would add
 two transports and platform-specific test/deployment behavior. TCP loopback is
 portable and already matches the container migration shape.
 
+### Extract a shared cross-repository package before contracts stabilize
+
+Rejected. No proven common contract currently justifies coupling repository
+release cycles, ownership, or dependency resolution through a shared package.
+Each repository should implement only its side of the reviewed, versioned
+public contract and may temporarily duplicate small protocol fixtures where
+that keeps ownership explicit. A shared package can be reconsidered only after
+real common behavior is demonstrated and separately reviewed; foundation work
+must not assume that extraction or this ADR's deployment topology.
+
 ### Direct storage, private imports, public/cloud transport, or another bot
 
 Rejected by the accepted architecture. Direct database/profile access, private
