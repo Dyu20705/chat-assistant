@@ -1,8 +1,8 @@
 # Open-Issue Dependency Graph
 
-Snapshot date: 2026-07-15
+Snapshot date: 2026-07-16
 
-Scope: all 26 open issues in `Dyu20705/chat-assistant`, plus the direct producer and Discord-consumer issues that gate their acceptance evidence. The snapshot reconciles the checked-in backlog manifests, live issue labels and refinement comments, current source and CI, merged governance PR #35, and explicitly approved architecture PR #36 at reviewed head `235e95ba21c6ae8f4e12afc16ca45ab7a291f47d` and squash commit `52ab23dcd5fd4af4ce216a49d4c4e29641fb60ce`.
+Scope: all 25 open issues in `Dyu20705/chat-assistant`, plus the direct producer and Discord-consumer issues that gate their acceptance evidence. The snapshot reconciles the checked-in backlog manifests, live issue labels and refinement comments, current source and CI, merged governance PR #35, explicitly approved architecture PR #36 at squash commit `52ab23dcd5fd4af4ce216a49d4c4e29641fb60ce`, and dependency-graph PR #38 at squash commit `5db1b434a71213ad138719e69faa5cc073ff12b0`.
 
 Historical `ollama-discord` and `ollama-assistant` URLs resolve to this repository and are rename aliases, not separate systems. Canonical references use `Dyu20705/chat-assistant`.
 
@@ -12,18 +12,17 @@ The managed backlog manifests are seed/alignment inputs, not the source of truth
 
 ## Current gate
 
-- Governance, the Phase 0 context baseline, and the accepted five-repository Health Assistant boundary are merged on `main` through PR #36.
-- [#37](https://github.com/Dyu20705/chat-assistant/issues/37) is the only local issue labeled `ready-for-agent`, but its work-start comment claims the existing branch, so it is in progress rather than available; it changes no architecture or runtime behavior.
+- Governance, the Phase 0 context baseline, the accepted five-repository Health Assistant boundary, and the reconciled dependency graph are merged on `main` through PR #38.
+- [#37](https://github.com/Dyu20705/chat-assistant/issues/37) closed through PR #38 after complete local verification, independent review, PR CI, and successful post-merge CI on `main`.
 - [#24](https://github.com/Dyu20705/chat-assistant/issues/24) received explicit owner architecture/privacy approval and was closed by merged [PR #36](https://github.com/Dyu20705/chat-assistant/pull/36). Required CI, two independent review axes, and GitHub Codex review were clean at the reviewed head, with no review threads.
-- [#2](https://github.com/Dyu20705/chat-assistant/issues/2) still carries `status:blocked` and a pre-merge comment whose only predecessor was #24. That predecessor is now satisfied, but this snapshot does not relabel #2 under the #37 documentation scope.
-- After #37, #2 is the next design issue to triage and draft. Its ADR still requires explicit human architecture/security approval before merge. No production implementation issue is currently unblocked.
+- [#2](https://github.com/Dyu20705/chat-assistant/issues/2) no longer has a dependency blocker. Its proposed ADR is ready in [PR #39](https://github.com/Dyu20705/chat-assistant/pull/39), while its live `status:blocked` label now records the mandatory owner architecture/security approval gate.
+- #2 remains the current design gate. Its proposed ADR cannot be accepted or merged without explicit human approval, and no local production implementation issue is currently unblocked.
 
 ## Execution graph
 
 | Issue | Type | Depends on | Blocked by current evidence | Responsible repository | Risk | Proposed order/state |
 | --- | --- | --- | --- | --- | --- | --- |
-| [#37](https://github.com/Dyu20705/chat-assistant/issues/37) Reconcile the Phase 0 graph | Maintenance/docs | None | None; documentation/managed-metadata reconciliation is claimed on its existing branch | `chat-assistant` | Low | Current issue; in progress |
-| [#2](https://github.com/Dyu20705/chat-assistant/issues/2) Select transport/topology | Architecture/ADR | Closed/accepted #24; programme ordering keeps #37 first | Live `status:blocked` metadata predates the satisfied #24 gate; ADR drafting is next after #37 and human architecture/security approval is required before merge | `chat-assistant` | Critical | Next after #37; relabel separately |
+| [#2](https://github.com/Dyu20705/chat-assistant/issues/2) Select transport/topology | Architecture/ADR | Closed/accepted #24 and closed #37 programme predecessor | No dependency blocker; live `status:blocked` records the mandatory owner architecture/security approval required for proposed ADR PR #39 | `chat-assistant` | Critical | Ready PR #39; owner approval gate |
 | [#3](https://github.com/Dyu20705/chat-assistant/issues/3) Versioned capability protocol | Public contract | #2; closed/accepted #24 | Topology is open; human protocol/security/privacy approval required | `chat-assistant`; fixtures consumed by all five repos | Critical | After #2 |
 | [#4](https://github.com/Dyu20705/chat-assistant/issues/4) Identity/privacy/data ownership | Security/contract | #2, #3; closed/accepted #24 | Topology and protocol are open; human security/privacy approval required | All five repos; policy recorded in `chat-assistant` | Critical | After #3 |
 | [#5](https://github.com/Dyu20705/chat-assistant/issues/5) Remove Discord runtime and initialize gateway package | Refactor/implementation | #2; closed/accepted #24 | Approved topology is absent; current `pyproject.toml`, `bot.py`, tests, and CI are legacy/partial migration inputs | `chat-assistant` | High | First package implementation |
@@ -187,13 +186,13 @@ flowchart TD
 4. #17 retains only metric instruments/cardinality, tracing, and audit events; logging, liveness/readiness/dependency-health semantics, API exposure, and deployment retention/rotation remain owned by #6, #9, #13, and #20 respectively.
 5. Missing edges and acceptance evidence were added to #18-#21, #29, #31, and #32. #31/#32 were labeled blocked.
 6. The consumer sequence is acyclic: chat #2-#4 decide shared boundaries, `my-discord-bot#56` finalizes Discord semantics, then chat #13 and `my-discord-bot#103` implement server/client against shared fixtures.
-7. Contradictory local blocked/ready labels were removed from #2, #5, #6, #9, and #10, and their static backlog entries no longer let the additive synchronizer recreate the conflict. At this snapshot, only independent documentation issue #37 is locally ready; #2 is the next substantive design task but its live label still awaits separate post-#37 normalization.
+7. Contradictory local blocked/ready labels were removed from #2, #5, #6, #9, and #10, and their static backlog entries no longer let the additive synchronizer recreate the conflict. After #37 merged, #2's satisfied dependency was normalized so its ADR could be claimed; once proposed PR #39 reached the owner gate, #2 returned to live `status:blocked`. No local issue is currently `ready-for-agent`.
 8. #33 has a coordination supplement for manually managed #17/#24. Health remains optional for the first generic/language/game release and must be either independently approved or demonstrably disabled and fail-closed.
 
 ## Remaining gates
 
-1. Merge the documentation-only #37 PR after its own CI and independent review.
-2. Reconcile #2's stale blocked metadata, then design, review, and obtain human approval for #2, followed by #3 and #4.
+1. Obtain explicit human architecture/security approval for ready PR #39 before accepting or merging #2's proposed ADR.
+2. After #2 closes, normalize and complete the versioned protocol decision in #3, followed by identity/privacy policy #4; both retain their own human gates.
 3. Start package/runtime work only after its dependency row is satisfied; preserve the existing CI baseline while migrating away from `bot.py`.
 4. Keep health disabled and deny health fallback until its separate intended-use, hazard, evidence, privacy, contract, QA, and release gates pass.
 5. Execute #21 only with exact release evidence and explicit human approval; close #33 last.
